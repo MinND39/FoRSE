@@ -1,0 +1,3052 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FoRSE Project Page</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Castoro&family=JetBrains+Mono&display=swap"
+    rel="stylesheet">
+  <style>
+    /* VOICE  a plain academic project page, as research groups publish next to a CVPR paper
+   IDEA   the paper re-set for the web: its figures, its tables, its equations
+   PICTURE Fig. 1 and Fig. 3 from the paper, full column width
+   COLOUR white ground, near-black ink, one link blue; no accents beyond the paper's own figures
+   TYPE   Noto Sans throughout, Castoro only for section titles; LaTeX equations via MathJax
+   LAYOUT one centred column of 900px; centred section titles; tables styled like booktabs */
+    :root {
+      color-scheme: light dark;
+      --bg: light-dark(#ffffff, #121417);
+      --ink: light-dark(#222428, #e7e9ec);
+      --mute: light-dark(#606770, #a0a7b0);
+      --line: light-dark(#dcdfe3, #30343a);
+      --soft: light-dark(#f7f7f8, #1a1d21);
+      --link: light-dark(#3273dc, #7aa7ff)
+    }
+
+    :root[data-theme=light] {
+      color-scheme: light
+    }
+
+    :root[data-theme=dark] {
+      color-scheme: dark
+    }
+
+    * {
+      box-sizing: border-box;
+      min-width: 0
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 16px/1.7 "Noto Sans", system-ui, sans-serif;
+      overflow-x: clip
+    }
+
+    a {
+      color: var(--link);
+      text-decoration: none
+    }
+
+    a:hover {
+      text-decoration: underline
+    }
+
+    .col {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 max(4vw, 16px)
+    }
+
+    section {
+      padding: 34px 0
+    }
+
+    section.soft {
+      background: var(--soft)
+    }
+
+    header {
+      text-align: center;
+      padding: 56px 0 28px
+    }
+
+    h1 {
+      font-weight: 700;
+      font-size: clamp(28px, 3.9vw, 40px);
+      line-height: 1.2;
+      margin: 0 0 18px;
+      text-wrap: balance
+    }
+
+    h2 {
+      font-family: Castoro, Georgia, serif;
+      font-weight: 400;
+      font-size: clamp(25px, 2.8vw, 31px);
+      text-align: center;
+      margin: 0 0 20px
+    }
+
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 30px 0 10px
+    }
+
+    p {
+      margin: 0 0 14px
+    }
+
+    .authors {
+      font-size: 18px;
+      margin: 0 0 2px
+    }
+
+    .venue {
+      color: var(--mute);
+      margin: 0 0 20px
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 0 18px;
+      border-radius: 999px;
+      background: #363636;
+      color: #fff;
+      font-weight: 500;
+      font-size: 15px;
+      border: 0;
+      cursor: pointer;
+      font-family: inherit;
+      text-decoration: none
+    }
+
+    .btn:hover {
+      text-decoration: none;
+      background: #222
+    }
+
+    .btn svg {
+      width: 17px;
+      height: 17px;
+      fill: currentColor
+    }
+
+    .btn.off {
+      opacity: .45;
+      cursor: default
+    }
+
+    .btn:focus-visible,
+    .nav:focus-visible,
+    .dot:focus-visible {
+      outline: 3px solid var(--link);
+      outline-offset: 2px
+    }
+
+    .later {
+      color: var(--mute);
+      font-size: 13.5px;
+      margin: 12px 0 0
+    }
+
+    figure {
+      margin: 0
+    }
+
+    .img {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: #fff;
+      border-radius: 2px
+    }
+
+    figcaption {
+      font-size: 14.5px;
+      color: var(--mute);
+      margin-top: 10px;
+      line-height: 1.6;
+      text-align: left
+    }
+
+    figcaption b {
+      color: var(--ink);
+      font-weight: 600
+    }
+
+    .teaser figcaption {
+      text-align: center;
+      max-width: 760px;
+      margin-inline: auto
+    }
+
+    .just p {
+      text-align: justify;
+      hyphens: auto
+    }
+
+    ul.find {
+      padding-left: 22px;
+      margin: 16px 0 0
+    }
+
+    ul.find li {
+      margin-bottom: 10px
+    }
+
+    .math {
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 6px 0 10px;
+      text-align: center
+    }
+
+    .math svg {
+      max-width: none
+    }
+
+    mjx-container {
+      display: inline-block
+    }
+
+    mjx-container[display="true"] {
+      display: block;
+      margin: 0
+    }
+
+    .im svg {
+      vertical-align: middle
+    }
+
+    .scroll {
+      overflow-x: auto
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 14.5px;
+      font-variant-numeric: tabular-nums
+    }
+
+    th,
+    td {
+      padding: 4px 9px;
+      white-space: nowrap;
+      text-align: right
+    }
+
+    th:first-child,
+    td:first-child {
+      text-align: left
+    }
+
+    .ptab {
+      border-top: 1.6px solid var(--ink);
+      border-bottom: 1.6px solid var(--ink)
+    }
+
+    .ptab thead th {
+      font-weight: 600;
+      text-align: center;
+      vertical-align: bottom;
+      white-space: normal;
+      line-height: 1.25;
+      padding-block: 6px
+    }
+
+    .ptab thead th:first-child {
+      text-align: left
+    }
+
+    .ptab thead tr:last-child th {
+      border-bottom: 1px solid var(--ink)
+    }
+
+    .ptab th.grp {
+      border-bottom: .8px solid var(--mute)
+    }
+
+    .ptab tbody+tbody tr:first-child td {
+      border-top: .8px solid var(--mute)
+    }
+
+    .ptab td {
+      text-align: right
+    }
+
+    .ptab td:first-child {
+      text-align: left
+    }
+
+    .ptab tr.me td:first-child {
+      font-weight: 600
+    }
+
+    .ptab u {
+      text-underline-offset: 3px
+    }
+
+    .ptab .sub td {
+      font-style: italic;
+      color: var(--mute);
+      text-align: left;
+      padding-top: 8px
+    }
+
+    .stack2 {
+      display: grid;
+      gap: 26px;
+      max-width: 680px;
+      margin-inline: auto
+    }
+
+    .two {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 28px;
+      align-items: start
+    }
+
+    .track {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth
+    }
+
+    .slide {
+      flex: 0 0 100%;
+      scroll-snap-align: center
+    }
+
+    .carbar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-top: 10px
+    }
+
+    .nav {
+      min-width: 42px;
+      min-height: 42px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 20px;
+      cursor: pointer
+    }
+
+    .dots {
+      display: flex;
+      gap: 2px
+    }
+
+    .dot {
+      width: 24px;
+      height: 24px;
+      border: 0;
+      background: none;
+      padding: 7px;
+      cursor: pointer
+    }
+
+    .dot::after {
+      content: "";
+      display: block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--line)
+    }
+
+    .dot[aria-current=true]::after {
+      background: var(--ink)
+    }
+
+    pre {
+      background: var(--soft);
+      border-radius: 4px;
+      padding: 16px;
+      font: 13.5px/1.55 "JetBrains Mono", monospace;
+      overflow-x: auto;
+      margin: 0
+    }
+
+    section.soft pre {
+      background: var(--bg)
+    }
+
+    .bibhead {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px
+    }
+
+    .bibhead h2 {
+      margin: 0;
+      text-align: left
+    }
+
+    footer {
+      color: var(--mute);
+      font-size: 13.5px;
+      text-align: center;
+      padding: 26px 0 40px
+    }
+
+    @media(max-width:760px) {
+      .two {
+        grid-template-columns: minmax(0, 1fr)
+      }
+
+      .just p {
+        text-align: left
+      }
+    }
+
+    @media(max-width:600px) {
+      table {
+        font-size: 13px
+      }
+
+      th,
+      td {
+        padding: 4px 6px
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      .track {
+        scroll-behavior: auto
+      }
+    }
+
+    :root {
+      --acc: #e07b28;
+      --good: #2f8a3b;
+      --bad: #d03a2f;
+      --a: #2f6fd0
+    }
+
+    header {
+      background: linear-gradient(180deg, light-dark(#f3f5f8, #171a1f), var(--bg));
+    }
+
+    .hl {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin: 30px 0 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line)
+    }
+
+    .hl>div {
+      padding: 16px 14px;
+      text-align: center
+    }
+
+    .hl>div+div {
+      border-left: 1px solid var(--line)
+    }
+
+    .hl .v {
+      font-family: Castoro, Georgia, serif;
+      font-size: clamp(26px, 3vw, 34px);
+      line-height: 1.1;
+      white-space: nowrap
+    }
+
+    .hl .v.acc {
+      color: var(--acc)
+    }
+
+    .hl .k {
+      font-size: 13px;
+      color: var(--mute);
+      line-height: 1.4;
+      margin-top: 4px
+    }
+
+    .props {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin: 18px 0 4px
+    }
+
+    .props span {
+      border: 1px dashed var(--mute);
+      border-radius: 999px;
+      padding: 4px 14px;
+      font-size: 14px
+    }
+
+    .seg {
+      display: inline-flex;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 3px;
+      gap: 2px;
+      background: var(--bg);
+      flex-wrap: wrap
+    }
+
+    .seg button {
+      min-height: 38px;
+      padding: 0 14px;
+      border: 0;
+      border-radius: 999px;
+      background: none;
+      color: var(--ink);
+      font: 500 14px "Noto Sans", sans-serif;
+      cursor: pointer
+    }
+
+    .seg button[aria-pressed=true] {
+      background: var(--ink);
+      color: var(--bg)
+    }
+
+    .seg button:focus-visible {
+      outline: 3px solid var(--link);
+      outline-offset: 1px
+    }
+
+    .ctl {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin: 6px 0 18px
+    }
+
+    .dchart {
+      display: grid;
+      gap: 8px;
+      max-width: 700px;
+      margin: 0 auto
+    }
+
+    .drow {
+      display: grid;
+      grid-template-columns: 8.5em minmax(0, 1fr) 4.4em;
+      gap: 10px;
+      align-items: center;
+      font-size: 14.5px
+    }
+
+    .drow .lab {
+      white-space: nowrap
+    }
+
+    .dtrack {
+      position: relative;
+      height: 24px
+    }
+
+    .dtrack::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -4px;
+      bottom: -4px;
+      width: 1px;
+      background: var(--mute)
+    }
+
+    .dbar {
+      position: absolute;
+      top: 3px;
+      height: 18px;
+      border-radius: 2px;
+      background: color-mix(in srgb, var(--mute) 55%, transparent)
+    }
+
+    .drow.me .dbar {
+      background: var(--acc)
+    }
+
+    .drow.me {
+      font-weight: 600
+    }
+
+    .dval {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap
+    }
+
+    .neg {
+      color: var(--bad)
+    }
+
+    .dnote {
+      text-align: center;
+      font-size: 13.5px;
+      color: var(--mute);
+      margin-top: 10px
+    }
+
+    .viewer {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 16px;
+      background: var(--bg)
+    }
+
+    .thumbs {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 16px
+    }
+
+    .thumb {
+      border: 2px solid transparent;
+      border-radius: 4px;
+      padding: 0;
+      background: none;
+      cursor: pointer;
+      overflow: hidden;
+      line-height: 0
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 58px;
+      object-fit: cover;
+      object-position: left center;
+      opacity: .6
+    }
+
+    .thumb[aria-pressed=true] {
+      border-color: var(--acc)
+    }
+
+    .thumb[aria-pressed=true] img {
+      opacity: 1
+    }
+
+    .thumb:focus-visible {
+      outline: 3px solid var(--link)
+    }
+
+    .q {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px 16px;
+      font-size: 15px;
+      margin-bottom: 10px
+    }
+
+    .q .a {
+      color: var(--a)
+    }
+
+    .q .b {
+      color: var(--acc)
+    }
+
+    .strip {
+      display: grid;
+      grid-template-columns: 7.5em minmax(0, 1fr);
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 8px
+    }
+
+    .strip .rl {
+      font-size: 13px;
+      color: var(--mute);
+      text-align: right;
+      line-height: 1.3
+    }
+
+    .strip img {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: #000
+    }
+
+    .ans {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 12px
+    }
+
+    .chip {
+      border-radius: 999px;
+      padding: 4px 14px;
+      font-size: 14px;
+      border: 1.5px solid
+    }
+
+    .chip.bad {
+      border-color: var(--bad);
+      border-style: dashed;
+      color: var(--bad)
+    }
+
+    .chip.good {
+      border-color: var(--ink);
+      background: light-dark(#fbf1d6, #3a3320);
+      color: var(--good)
+    }
+
+    .vcap {
+      font-size: 14px;
+      color: var(--mute);
+      margin-top: 12px
+    }
+
+    @media(max-width:760px) {
+      .hl {
+        grid-template-columns: repeat(2, minmax(0, 1fr))
+      }
+
+      .hl>div:nth-child(3) {
+        border-left: 0
+      }
+
+      .hl>div:nth-child(n+3) {
+        border-top: 1px solid var(--line)
+      }
+
+      .thumbs {
+        grid-template-columns: repeat(5, minmax(0, 1fr))
+      }
+
+      .thumb img {
+        height: 38px
+      }
+
+      .strip {
+        grid-template-columns: minmax(0, 1fr)
+      }
+
+      .strip .rl {
+        text-align: left
+      }
+    }
+
+    @media(max-width:600px) {
+      .drow {
+        grid-template-columns: 6.4em minmax(0, 1fr) 3.8em;
+        font-size: 13px
+      }
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 36px;
+      align-items: start
+    }
+
+    .ab {
+      grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+      align-items: center
+    }
+
+    .ab figure .img {
+      max-width: 440px;
+      margin: 0 auto
+    }
+
+    h2.left {
+      text-align: left;
+      margin-bottom: 12px
+    }
+
+    .tabs2 {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 28px
+    }
+
+    .tabs2 table {
+      font-size: 13.5px
+    }
+
+    .tabs2 th,
+    .tabs2 td {
+      padding-inline: 5px
+    }
+
+    .qual {
+      max-width: 860px;
+      margin: 0 auto
+    }
+
+    @media(max-width:860px) {
+
+      .split,
+      .ab {
+        grid-template-columns: minmax(0, 1fr)
+      }
+
+      h2.left {
+        text-align: center
+      }
+    }
+
+    .img {
+      cursor: zoom-in
+    }
+
+    .lb {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      padding: max(3vw, 12px);
+      background: rgba(10, 12, 15, .96);
+      backdrop-filter: blur(4px)
+    }
+
+    .lb.open {
+      display: flex
+    }
+
+    .lb img {
+      max-width: 100%;
+      max-height: calc(100vh - 110px);
+      width: auto;
+      height: auto;
+      background: #fff;
+      border-radius: 3px;
+      cursor: zoom-out;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, .4)
+    }
+
+    .lb p b {
+      color: #fff
+    }
+
+    .lb p {
+      color: #e7e9ec;
+      font-size: 14px;
+      max-width: 900px;
+      text-align: center;
+      margin: 0
+    }
+
+    .lb .x {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      min-width: 44px;
+      min-height: 44px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, .4);
+      background: none;
+      color: #fff;
+      font-size: 24px;
+      cursor: pointer
+    }
+
+    .lb .x:focus-visible {
+      outline: 3px solid #7aa7ff
+    }
+
+    @media(prefers-reduced-motion:no-preference) {
+      .lb.open img {
+        animation: zin .18s ease-out
+      }
+    }
+
+    @keyframes zin {
+      from {
+        transform: scale(.96);
+        opacity: .6
+      }
+
+      to {
+        transform: none;
+        opacity: 1
+      }
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 58px
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      html {
+        scroll-behavior: auto
+      }
+    }
+
+    .toc {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line)
+    }
+
+    .tocin {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 max(4vw, 16px);
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      justify-content: safe center;
+      scrollbar-width: none
+    }
+
+    .tocin::-webkit-scrollbar {
+      display: none
+    }
+
+    .toc a {
+      flex: none;
+      padding: 13px 12px 11px;
+      font-size: 14.5px;
+      color: var(--mute);
+      border-bottom: 2px solid transparent;
+      text-decoration: none
+    }
+
+    .toc a:hover {
+      color: var(--ink);
+      text-decoration: none
+    }
+
+    .toc a[aria-current=true] {
+      color: var(--ink);
+      border-bottom-color: var(--ink);
+      font-weight: 600
+    }
+
+    .toc a:focus-visible {
+      outline: 3px solid var(--link);
+      outline-offset: -3px
+    }
+
+    /* effects */
+    @media(prefers-reduced-motion:no-preference) {
+      html.anim .rv {
+        opacity: 0;
+        transform: translateY(18px);
+        transition: opacity .7s ease, transform .7s cubic-bezier(.2, .7, .2, 1)
+      }
+
+      html.anim .rv.in {
+        opacity: 1;
+        transform: none
+      }
+
+      header h1,
+      header .authors,
+      header .venue,
+      header .links,
+      header .later,
+      header .hl {
+        animation: hin .8s cubic-bezier(.2, .7, .2, 1) both
+      }
+
+      header .authors {
+        animation-delay: .08s
+      }
+
+      header .venue {
+        animation-delay: .12s
+      }
+
+      header .links {
+        animation-delay: .18s
+      }
+
+      header .later {
+        animation-delay: .22s
+      }
+
+      header .hl {
+        animation-delay: .3s
+      }
+
+      .img {
+        transition: transform .35s ease, box-shadow .35s ease
+      }
+
+      .img:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 28px rgba(15, 20, 30, .14)
+      }
+
+      .btn {
+        transition: background .2s ease, transform .2s ease
+      }
+
+      .btn:not(.off):hover {
+        transform: translateY(-1px)
+      }
+
+      .toc a {
+        transition: color .2s ease, border-color .25s ease
+      }
+
+      .ptab tbody tr {
+        transition: background .15s ease
+      }
+
+      .hl>div {
+        transition: background .25s ease
+      }
+    }
+
+    @keyframes hin {
+      from {
+        opacity: 0;
+        transform: translateY(14px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    .ptab tbody tr:hover td {
+      background: color-mix(in srgb, var(--acc) 8%, transparent)
+    }
+
+    .ptab tbody tr.sub:hover td {
+      background: none
+    }
+
+    .hl>div:hover {
+      background: color-mix(in srgb, var(--ink) 3%, transparent)
+    }
+
+    .slide .img:hover {
+      transform: none;
+      box-shadow: none
+    }
+
+    .forge-title {
+      position: relative;
+      display: block;
+      text-wrap: balance;
+      font-weight: 700;
+      font-size: clamp(28px, 3.9vw, 40px);
+      line-height: 1.2;
+      margin: 0 0 18px;
+      text-align: center;
+    }
+
+    .forge-acronym {
+      display: inline-block;
+      font-weight: 800;
+      letter-spacing: .5px;
+      background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb, #1dd1a1, #ff9ff3, #ff6b6b);
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      animation: forgeFlow 6s linear infinite;
+      filter: drop-shadow(0 2px 10px rgba(72, 219, 251, .35));
+      transition: transform .35s ease;
+    }
+
+    .forge-acronym:hover {
+      transform: translateY(-2px) scale(1.04)
+    }
+
+    .forge-sep {
+      color: var(--ink, #222428);
+      margin-right: .15em
+    }
+
+    .forge-sub {
+      display: inline;
+      background-image: linear-gradient(90deg, #e07b28, #48dbfb, #e07b28);
+      background-size: 200% 2px;
+      background-repeat: no-repeat;
+      background-position: 0 100%;
+      padding-bottom: 2px;
+      animation: forgeUnderline 8s linear infinite;
+    }
+
+    @media (prefers-reduced-motion:no-preference) {
+      .forge-title::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        border-radius: 6px;
+        background: linear-gradient(120deg, transparent 40%, rgba(255, 255, 255, .18) 50%, transparent 60%);
+        background-size: 250% 100%;
+        background-position: 200% 0;
+        animation: forgeShine 7s ease-in-out infinite;
+      }
+    }
+
+    @keyframes forgeFlow {
+      0% {
+        background-position: 0% 50%
+      }
+
+      100% {
+        background-position: 300% 50%
+      }
+    }
+
+    @keyframes forgeUnderline {
+      0% {
+        background-position: 0 100%
+      }
+
+      100% {
+        background-position: 200% 100%
+      }
+    }
+
+    @keyframes forgeShine {
+
+      0%,
+      55% {
+        background-position: 200% 0
+      }
+
+      75%,
+      100% {
+        background-position: -50% 0
+      }
+    }
+
+    @media (max-width:640px) {
+      .forge-title::after {
+        display: none
+      }
+
+      .forge-acronym {
+        filter: none
+      }
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+
+      .forge-acronym,
+      .forge-sub {
+        animation: none
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="col">
+      <h1 class="forge-title">
+        <span style="color:#e57373;font-weight:800;">FoRSE</span>:
+        <span class="forge-sub">Foreground-Guided Residual Spatiotemporal Enhancement for Mitigating Temporal
+          Hallucinations in Video-LLMs</span>
+      </h1>
+      <p class="authors">Anonymous Authors</p>
+      <p class="venue">CVPR 2027 Submission</p>
+      <div class="links">
+        <span class="btn off" aria-disabled="true"><svg viewBox="0 0 24 24">
+            <path d="M6 2h9l5 5v15H6zM14 3v5h5" />
+          </svg>Paper</span>
+        <span class="btn off" aria-disabled="true"><svg viewBox="0 0 24 24">
+            <path
+              d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.6 9.6 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2z" />
+          </svg>Code</span>
+        <span class="btn off" aria-disabled="true"><svg viewBox="0 0 24 24">
+            <path d="M3 4h18v12H8l-5 4z" />
+          </svg>arXiv</span>
+      </div>
+      <p class="later">Links will be available after the review period.</p>
+      <div class="hl">
+        <div>
+          <div class="v acc">6 / 6</div>
+          <div class="k">backbone&ndash;benchmark settings improved</div>
+        </div>
+        <div>
+          <div class="v" data-n="4.38" data-p="+" data-d="2">+4.38</div>
+          <div class="k">VideoHallucer avg.<br>LLaVA-OV-7B</div>
+        </div>
+        <div>
+          <div class="v" data-n="4.59" data-p="+" data-d="2">+4.59</div>
+          <div class="k">EventHallusion avg.<br>Qwen2.5-VL-7B</div>
+        </div>
+        <div>
+          <div class="v" data-n="1.30" data-s="&times;" data-d="2">1.30&times;</div>
+          <div class="k">latency on Qwen2.5-VL-7B<br>(SEASON: 2.32&times;)</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="toc" aria-label="Sections">
+    <div class="tocin">
+      <a href="#abstract">Abstract</a><a href="#diagnosis">Diagnosis</a><a href="#method">Method</a><a
+        href="#results">Results</a><a href="#analysis">Analysis</a><a href="#qualitative">Qualitative</a><a
+        href="#bibtex">BibTeX</a>
+    </div>
+  </nav>
+
+  <section id="abstract" class="soft">
+    <div class="col split ab">
+      <figure>
+        <img class="img" src="static/teaser.jpg"
+          alt="Figure 1: DINO-HEAL, TCD and SEASON answer that taking out a bottle happens first; FoRSE answers correctly that opening the backpack happens first."
+          width="969" height="855">
+        <figcaption><b>Figure 1.</b> Training-free paradigms for mitigating video hallucination. DINO-HEAL reweights
+          spatial features. TCD and SEASON contrast predictions from original and corrupted views. FoRSE enhances the
+          visual tokens through foreground weighting, persistence, and gated temporal differences.</figcaption>
+      </figure>
+      <div class="just">
+        <h2 class="left">Abstract</h2>
+        <p>Video Large Language Models (Video-LLMs) reliably recognize objects and scenes. Yet they often suffer from
+          temporal hallucinations: they assert temporal information, such as the order or direction of events, that is
+          not supported by the video. Existing training-free approaches either amplify per-frame salient evidence or
+          contrast predictions with those from temporally corrupted videos. They implicitly assume that directing the
+          model to the right regions recovers the correct temporal decision. However, attending to the right regions in
+          a single frame does not automatically transfer to temporal understanding. Our diagnostics show that the final
+          decoding stage has limited ability to retain inter-frame temporal evidence. Analyzing this failure further, we
+          find that the representations at this stage lack most of the temporal evidence. The model also does not read
+          out what little evidence is present when producing the answer.</p>
+        <p>We therefore propose FoRSE, a training-free scheme that strengthens the foreground evidence and its temporal
+          change in the visual tokens before they reach the language model. This makes the temporal evidence easier for
+          the model to use when decoding the answer. Without updating any model parameters, FoRSE reinforces persistent
+          foreground regions and injects foreground-gated inter-frame feature residuals into the visual representations.
+          Across three backbones (LLaVA-OneVision, Qwen2.5-VL, and LLaVA-Video), FoRSE improves average accuracy over
+          the unmodified models in all six backbone-benchmark combinations on VideoHallucer and EventHallusion, with
+          gains of up to 4.38 and 4.59 percentage points, respectively.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="diagnosis">
+    <div class="col">
+      <h2>Diagnosing Temporal Hallucination</h2>
+      <figure>
+        <img class="img" src="static/diagnosis.jpg"
+          alt="Figure 2: attention of the base model and of FoRSE on a VideoHallucer question." width="2022"
+          height="531">
+        <figcaption><b>Figure 2.</b> Inter-frame object state is not made explicit (F2). Left: the base model's
+          attention spreads over the background, misses the transition from the scissors (A) to the bowl (B), and
+          answers &ldquo;B before A&rdquo;. Right: FoRSE modifies only the visual tokens, yet attention concentrates
+          more on the foreground and the answer becomes correct.</figcaption>
+      </figure>
+      <div class="split" style="margin-top:26px">
+        <div>
+          <h3 style="margin-top:0">Three observations</h3>
+          <ul class="find" style="margin-top:0">
+            <li><b>F1. Foreground attention.</b> When LLaVA-OV-7B answers correctly, it places more attention on the
+              salient foreground and keeps it across more frames (Table 1).</li>
+            <li><b>F2. No explicit change.</b> Visual tokens describe each frame on its own: one group of tokens
+              describes &ldquo;an upright cup&rdquo;, a later group &ldquo;a cup on its side&rdquo;, but no token says
+              &ldquo;the cup fell&rdquo;.</li>
+            <li><b>F3. Weak use of motion.</b> On time-reversed TempCompass clips, the decision-state probe rarely
+              flips, and the model's own horizontal direction accuracy is at chance (Table 2).</li>
+          </ul>
+          <figure style="margin-top:18px">
+            <figcaption style="margin:0 0 8px"><b>Table 1.</b> Foreground-attention diagnostics (F1), LLaVA-OV-7B on 600
+              VidHalluc TSH questions. &Delta; is Correct minus Wrong.</figcaption>
+            <div class="scroll">
+              <table class="ptab">
+                <thead>
+                  <tr>
+                    <th>Metric</th>
+                    <th>Wrong</th>
+                    <th>Correct</th>
+                    <th>&Delta;</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Bad-frame ratio <mjx-container class="im" class="MathJax" jax="SVG"><svg
+                          style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="4.484ex"
+                          height="1.902ex" role="img" focusable="false" viewBox="0 -683 1981.9 840.8">
+                          <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)">
+                            <g data-mml-node="math">
+                              <g data-mml-node="msub">
+                                <g data-mml-node="mi">
+                                  <path data-c="1D445"
+                                    d="M230 637Q203 637 198 638T193 649Q193 676 204 682Q206 683 378 683Q550 682 564 680Q620 672 658 652T712 606T733 563T739 529Q739 484 710 445T643 385T576 351T538 338L545 333Q612 295 612 223Q612 212 607 162T602 80V71Q602 53 603 43T614 25T640 16Q668 16 686 38T712 85Q717 99 720 102T735 105Q755 105 755 93Q755 75 731 36Q693 -21 641 -21H632Q571 -21 531 4T487 82Q487 109 502 166T517 239Q517 290 474 313Q459 320 449 321T378 323H309L277 193Q244 61 244 59Q244 55 245 54T252 50T269 48T302 46H333Q339 38 339 37T336 19Q332 6 326 0H311Q275 2 180 2Q146 2 117 2T71 2T50 1Q33 1 33 10Q33 12 36 24Q41 43 46 45Q50 46 61 46H67Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628Q287 635 230 637ZM630 554Q630 586 609 608T523 636Q521 636 500 636T462 637H440Q393 637 386 627Q385 624 352 494T319 361Q319 360 388 360Q466 361 492 367Q556 377 592 426Q608 449 619 486T630 554Z">
+                                  </path>
+                                </g>
+                                <g data-mml-node="TeXAtom" transform="translate(792,-150) scale(0.707)"
+                                  data-mjx-texclass="ORD">
+                                  <g data-mml-node="TeXAtom" data-mjx-texclass="ORD">
+                                    <g data-mml-node="mi">
+                                      <path data-c="62"
+                                        d="M307 -11Q234 -11 168 55L158 37Q156 34 153 28T147 17T143 10L138 1L118 0H98V298Q98 599 97 603Q94 622 83 628T38 637H20V660Q20 683 22 683L32 684Q42 685 61 686T98 688Q115 689 135 690T165 693T176 694H179V543Q179 391 180 391L183 394Q186 397 192 401T207 411T228 421T254 431T286 439T323 442Q401 442 461 379T522 216Q522 115 458 52T307 -11ZM182 98Q182 97 187 90T196 79T206 67T218 55T233 44T250 35T271 29T295 26Q330 26 363 46T412 113Q424 148 424 212Q424 287 412 323Q385 405 300 405Q270 405 239 390T188 347L182 339V98Z">
+                                      </path>
+                                      <path data-c="61"
+                                        d="M137 305T115 305T78 320T63 359Q63 394 97 421T218 448Q291 448 336 416T396 340Q401 326 401 309T402 194V124Q402 76 407 58T428 40Q443 40 448 56T453 109V145H493V106Q492 66 490 59Q481 29 455 12T400 -6T353 12T329 54V58L327 55Q325 52 322 49T314 40T302 29T287 17T269 6T247 -2T221 -8T190 -11Q130 -11 82 20T34 107Q34 128 41 147T68 188T116 225T194 253T304 268H318V290Q318 324 312 340Q290 411 215 411Q197 411 181 410T156 406T148 403Q170 388 170 359Q170 334 154 320ZM126 106Q126 75 150 51T209 26Q247 26 276 49T315 109Q317 116 318 175Q318 233 317 233Q309 233 296 232T251 223T193 203T147 166T126 106Z"
+                                        transform="translate(556,0)"></path>
+                                      <path data-c="64"
+                                        d="M376 495Q376 511 376 535T377 568Q377 613 367 624T316 637H298V660Q298 683 300 683L310 684Q320 685 339 686T376 688Q393 689 413 690T443 693T454 694H457V390Q457 84 458 81Q461 61 472 55T517 46H535V0Q533 0 459 -5T380 -11H373V44L365 37Q307 -11 235 -11Q158 -11 96 50T34 215Q34 315 97 378T244 442Q319 442 376 393V495ZM373 342Q328 405 260 405Q211 405 173 369Q146 341 139 305T131 211Q131 155 138 120T173 59Q203 26 251 26Q322 26 373 103V342Z"
+                                        transform="translate(1056,0)"></path>
+                                    </g>
+                                  </g>
+                                </g>
+                              </g>
+                            </g>
+                          </g>
+                        </svg></mjx-container> &darr;</td>
+                    <td>62.77%</td>
+                    <td>50.41%</td>
+                    <td>&minus;12.36 pp</td>
+                  </tr>
+                  <tr>
+                    <td>FG/BG ratio <mjx-container class="im" class="MathJax" jax="SVG"><svg
+                          style="vertical-align: -0.669ex;" xmlns="http://www.w3.org/2000/svg" width="3.351ex"
+                          height="2.214ex" role="img" focusable="false" viewBox="0 -683 1480.9 978.7">
+                          <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)">
+                            <g data-mml-node="math">
+                              <g data-mml-node="msub">
+                                <g data-mml-node="mi">
+                                  <path data-c="1D437"
+                                    d="M287 628Q287 635 230 637Q207 637 200 638T193 647Q193 655 197 667T204 682Q206 683 403 683Q570 682 590 682T630 676Q702 659 752 597T803 431Q803 275 696 151T444 3L430 1L236 0H125H72Q48 0 41 2T33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM703 469Q703 507 692 537T666 584T629 613T590 629T555 636Q553 636 541 636T512 636T479 637H436Q392 637 386 627Q384 623 313 339T242 52Q242 48 253 48T330 47Q335 47 349 47T373 46Q499 46 581 128Q617 164 640 212T683 339T703 469Z">
+                                  </path>
+                                </g>
+                                <g data-mml-node="TeXAtom" transform="translate(861,-150) scale(0.707)"
+                                  data-mjx-texclass="ORD">
+                                  <g data-mml-node="TeXAtom" data-mjx-texclass="ORD">
+                                    <g data-mml-node="mi">
+                                      <path data-c="66"
+                                        d="M273 0Q255 3 146 3Q43 3 34 0H26V46H42Q70 46 91 49Q99 52 103 60Q104 62 104 224V385H33V431H104V497L105 564L107 574Q126 639 171 668T266 704Q267 704 275 704T289 705Q330 702 351 679T372 627Q372 604 358 590T321 576T284 590T270 627Q270 647 288 667H284Q280 668 273 668Q245 668 223 647T189 592Q183 572 182 497V431H293V385H185V225Q185 63 186 61T189 57T194 54T199 51T206 49T213 48T222 47T231 47T241 46T251 46H282V0H273Z">
+                                      </path>
+                                      <path data-c="67"
+                                        d="M329 409Q373 453 429 453Q459 453 472 434T485 396Q485 382 476 371T449 360Q416 360 412 390Q410 404 415 411Q415 412 416 414V415Q388 412 363 393Q355 388 355 386Q355 385 359 381T368 369T379 351T388 325T392 292Q392 230 343 187T222 143Q172 143 123 171Q112 153 112 133Q112 98 138 81Q147 75 155 75T227 73Q311 72 335 67Q396 58 431 26Q470 -13 470 -72Q470 -139 392 -175Q332 -206 250 -206Q167 -206 107 -175Q29 -140 29 -75Q29 -39 50 -15T92 18L103 24Q67 55 67 108Q67 155 96 193Q52 237 52 292Q52 355 102 398T223 442Q274 442 318 416L329 409ZM299 343Q294 371 273 387T221 404Q192 404 171 388T145 343Q142 326 142 292Q142 248 149 227T179 192Q196 182 222 182Q244 182 260 189T283 207T294 227T299 242Q302 258 302 292T299 343ZM403 -75Q403 -50 389 -34T348 -11T299 -2T245 0H218Q151 0 138 -6Q118 -15 107 -34T95 -74Q95 -84 101 -97T122 -127T170 -155T250 -167Q319 -167 361 -139T403 -75Z"
+                                        transform="translate(306,0)"></path>
+                                    </g>
+                                  </g>
+                                </g>
+                              </g>
+                            </g>
+                          </g>
+                        </svg></mjx-container> &uarr;</td>
+                    <td>0.8711</td>
+                    <td>0.9460</td>
+                    <td>+0.0749</td>
+                  </tr>
+                  <tr>
+                    <td>Mean FG attention <mjx-container class="im" class="MathJax" jax="SVG"><svg
+                          style="vertical-align: -0.669ex;" xmlns="http://www.w3.org/2000/svg" width="3.174ex"
+                          height="2.857ex" role="img" focusable="false" viewBox="0 -967 1402.9 1262.7">
+                          <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)">
+                            <g data-mml-node="math">
+                              <g data-mml-node="msub">
+                                <g data-mml-node="TeXAtom" data-mjx-texclass="ORD">
+                                  <g data-mml-node="mover">
+                                    <g data-mml-node="mi">
+                                      <path data-c="1D434"
+                                        d="M208 74Q208 50 254 46Q272 46 272 35Q272 34 270 22Q267 8 264 4T251 0Q249 0 239 0T205 1T141 2Q70 2 50 0H42Q35 7 35 11Q37 38 48 46H62Q132 49 164 96Q170 102 345 401T523 704Q530 716 547 716H555H572Q578 707 578 706L606 383Q634 60 636 57Q641 46 701 46Q726 46 726 36Q726 34 723 22Q720 7 718 4T704 0Q701 0 690 0T651 1T578 2Q484 2 455 0H443Q437 6 437 9T439 27Q443 40 445 43L449 46H469Q523 49 533 63L521 213H283L249 155Q208 86 208 74ZM516 260Q516 271 504 416T490 562L463 519Q447 492 400 412L310 260L413 259Q516 259 516 260Z">
+                                      </path>
+                                    </g>
+                                    <g data-mml-node="mo" transform="translate(514,277) translate(-250 0)">
+                                      <path data-c="AF" d="M69 544V590H430V544H69Z"></path>
+                                    </g>
+                                  </g>
+                                </g>
+                                <g data-mml-node="TeXAtom" transform="translate(783,-150) scale(0.707)"
+                                  data-mjx-texclass="ORD">
+                                  <g data-mml-node="TeXAtom" data-mjx-texclass="ORD">
+                                    <g data-mml-node="mi">
+                                      <path data-c="66"
+                                        d="M273 0Q255 3 146 3Q43 3 34 0H26V46H42Q70 46 91 49Q99 52 103 60Q104 62 104 224V385H33V431H104V497L105 564L107 574Q126 639 171 668T266 704Q267 704 275 704T289 705Q330 702 351 679T372 627Q372 604 358 590T321 576T284 590T270 627Q270 647 288 667H284Q280 668 273 668Q245 668 223 647T189 592Q183 572 182 497V431H293V385H185V225Q185 63 186 61T189 57T194 54T199 51T206 49T213 48T222 47T231 47T241 46T251 46H282V0H273Z">
+                                      </path>
+                                      <path data-c="67"
+                                        d="M329 409Q373 453 429 453Q459 453 472 434T485 396Q485 382 476 371T449 360Q416 360 412 390Q410 404 415 411Q415 412 416 414V415Q388 412 363 393Q355 388 355 386Q355 385 359 381T368 369T379 351T388 325T392 292Q392 230 343 187T222 143Q172 143 123 171Q112 153 112 133Q112 98 138 81Q147 75 155 75T227 73Q311 72 335 67Q396 58 431 26Q470 -13 470 -72Q470 -139 392 -175Q332 -206 250 -206Q167 -206 107 -175Q29 -140 29 -75Q29 -39 50 -15T92 18L103 24Q67 55 67 108Q67 155 96 193Q52 237 52 292Q52 355 102 398T223 442Q274 442 318 416L329 409ZM299 343Q294 371 273 387T221 404Q192 404 171 388T145 343Q142 326 142 292Q142 248 149 227T179 192Q196 182 222 182Q244 182 260 189T283 207T294 227T299 242Q302 258 302 292T299 343ZM403 -75Q403 -50 389 -34T348 -11T299 -2T245 0H218Q151 0 138 -6Q118 -15 107 -34T95 -74Q95 -84 101 -97T122 -127T170 -155T250 -167Q319 -167 361 -139T403 -75Z"
+                                        transform="translate(306,0)"></path>
+                                    </g>
+                                  </g>
+                                </g>
+                              </g>
+                            </g>
+                          </g>
+                        </svg></mjx-container> &uarr;</td>
+                    <td>0.0159</td>
+                    <td>0.0468</td>
+                    <td>+0.0309</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </figure>
+        </div>
+        <figure>
+          <figcaption style="margin:0 0 8px"><b>Table 2.</b> Temporal diagnostics on TempCompass (F3), Qwen2.5-VL-7B.
+            (a) Reversal flip rate (%). (b) Horizontal direction accuracy (%).</figcaption>
+          <div class="scroll">
+            <table class="ptab">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>#Src</th>
+                  <th>#Q</th>
+                  <th><mjx-container class="im" class="MathJax" jax="SVG"><svg style="vertical-align: 0;"
+                        xmlns="http://www.w3.org/2000/svg" width="1.873ex" height="1.545ex" role="img" focusable="false"
+                        viewBox="0 -683 828 683">
+                        <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)">
+                          <g data-mml-node="math">
+                            <g data-mml-node="mi">
+                              <path data-c="1D437"
+                                d="M287 628Q287 635 230 637Q207 637 200 638T193 647Q193 655 197 667T204 682Q206 683 403 683Q570 682 590 682T630 676Q702 659 752 597T803 431Q803 275 696 151T444 3L430 1L236 0H125H72Q48 0 41 2T33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM703 469Q703 507 692 537T666 584T629 613T590 629T555 636Q553 636 541 636T512 636T479 637H436Q392 637 386 627Q384 623 313 339T242 52Q242 48 253 48T330 47Q335 47 349 47T373 46Q499 46 581 128Q617 164 640 212T683 339T703 469Z">
+                              </path>
+                            </g>
+                          </g>
+                        </g>
+                      </svg></mjx-container></th>
+                  <th><mjx-container class="im" class="MathJax" jax="SVG"><svg style="vertical-align: 0;"
+                        xmlns="http://www.w3.org/2000/svg" width="1.636ex" height="1.545ex" role="img" focusable="false"
+                        viewBox="0 -683 723 683">
+                        <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)">
+                          <g data-mml-node="math">
+                            <g data-mml-node="mi">
+                              <path data-c="1D44D"
+                                d="M58 8Q58 23 64 35Q64 36 329 334T596 635L586 637Q575 637 512 637H500H476Q442 637 420 635T365 624T311 598T266 548T228 469Q227 466 226 463T224 458T223 453T222 450L221 448Q218 443 202 443Q185 443 182 453L214 561Q228 606 241 651Q249 679 253 681Q256 683 487 683H718Q723 678 723 675Q723 673 717 649Q189 54 188 52L185 49H274Q369 50 377 51Q452 60 500 100T579 247Q587 272 590 277T603 282H607Q628 282 628 271Q547 5 541 2Q538 0 300 0H124Q58 0 58 8Z">
+                              </path>
+                            </g>
+                          </g>
+                        </g>
+                      </svg></mjx-container></th>
+                  <th>Video-LLM</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="sub">
+                  <td colspan="6">(a) Reversal flip rate</td>
+                </tr>
+                <tr>
+                  <td>Horizontal</td>
+                  <td>7</td>
+                  <td>56</td>
+                  <td>50.0</td>
+                  <td>10.7</td>
+                  <td>15.0</td>
+                </tr>
+                <tr>
+                  <td>Vertical</td>
+                  <td>4</td>
+                  <td>19</td>
+                  <td>50.0</td>
+                  <td>12.5</td>
+                  <td>31.3</td>
+                </tr>
+                <tr>
+                  <td>Depth</td>
+                  <td>5</td>
+                  <td>40</td>
+                  <td>80.0</td>
+                  <td>4.0</td>
+                  <td>22.7</td>
+                </tr>
+                <tr>
+                  <td>Rotation</td>
+                  <td>4</td>
+                  <td>28</td>
+                  <td>75.0</td>
+                  <td>12.5</td>
+                  <td>6.3</td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr class="sub">
+                  <td colspan="6">(b) Horizontal direction accuracy</td>
+                </tr>
+                <tr>
+                  <td>Original</td>
+                  <td>7</td>
+                  <td>56</td>
+                  <td>51.4</td>
+                  <td>59.3</td>
+                  <td>50.0</td>
+                </tr>
+                <tr>
+                  <td>Shuffled</td>
+                  <td>7</td>
+                  <td>56</td>
+                  <td>28.6</td>
+                  <td>55.0</td>
+                  <td>43.6</td>
+                </tr>
+                <tr>
+                  <td>Static</td>
+                  <td>7</td>
+                  <td>56</td>
+                  <td>51.4</td>
+                  <td>48.2</td>
+                  <td>44.6</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="method" class="soft">
+    <div class="col">
+      <h2>Method</h2>
+      <figure>
+        <img class="img" src="static/overview.jpg" alt="Figure 3: overview of FoRSE." width="2064" height="858">
+        <figcaption><b>Figure 3.</b> Overview of FoRSE. Sampled frames are processed by BiRefNet and the frozen visual
+          pipeline to obtain foreground occupancy <mjx-container class="im" class="MathJax" jax="SVG"><svg
+              style="vertical-align: 0;" xmlns="http://www.w3.org/2000/svg" width="1.695ex" height="1.538ex" role="img"
+              focusable="false" viewBox="0 -680 749 680">
+              <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)">
+                <g data-mml-node="math">
+                  <g data-mml-node="mi">
+                    <path data-c="1D439"
+                      d="M48 1Q31 1 31 11Q31 13 34 25Q38 41 42 43T65 46Q92 46 125 49Q139 52 144 61Q146 66 215 342T285 622Q285 629 281 629Q273 632 228 634H197Q191 640 191 642T193 659Q197 676 203 680H742Q749 676 749 669Q749 664 736 557T722 447Q720 440 702 440H690Q683 445 683 453Q683 454 686 477T689 530Q689 560 682 579T663 610T626 626T575 633T503 634H480Q398 633 393 631Q388 629 386 623Q385 622 352 492L320 363H375Q378 363 398 363T426 364T448 367T472 374T489 386Q502 398 511 419T524 457T529 475Q532 480 548 480H560Q567 475 567 470Q567 467 536 339T502 207Q500 200 482 200H470Q463 206 463 212Q463 215 468 234T473 274Q473 303 453 310T364 317H309L277 190Q245 66 245 60Q245 46 334 46H359Q365 40 365 39T363 19Q359 6 353 0H336Q295 2 185 2Q120 2 86 2T48 1Z">
+                    </path>
+                  </g>
+                </g>
+              </g>
+            </svg></mjx-container> and projected visual tokens <mjx-container class="im" class="MathJax" jax="SVG"><svg
+              style="vertical-align: -0.05ex;" xmlns="http://www.w3.org/2000/svg" width="1.74ex" height="1.595ex"
+              role="img" focusable="false" viewBox="0 -683 769 705">
+              <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)">
+                <g data-mml-node="math">
+                  <g data-mml-node="mi">
+                    <path data-c="1D449"
+                      d="M52 648Q52 670 65 683H76Q118 680 181 680Q299 680 320 683H330Q336 677 336 674T334 656Q329 641 325 637H304Q282 635 274 635Q245 630 242 620Q242 618 271 369T301 118L374 235Q447 352 520 471T595 594Q599 601 599 609Q599 633 555 637Q537 637 537 648Q537 649 539 661Q542 675 545 679T558 683Q560 683 570 683T604 682T668 681Q737 681 755 683H762Q769 676 769 672Q769 655 760 640Q757 637 743 637Q730 636 719 635T698 630T682 623T670 615T660 608T652 599T645 592L452 282Q272 -9 266 -16Q263 -18 259 -21L241 -22H234Q216 -22 216 -15Q213 -9 177 305Q139 623 138 626Q133 637 76 637H59Q52 642 52 648Z">
+                    </path>
+                  </g>
+                </g>
+              </g>
+            </svg></mjx-container>. The foreground map and its temporal average <mjx-container class="im"
+            class="MathJax" jax="SVG"><svg style="vertical-align: 0;" xmlns="http://www.w3.org/2000/svg" width="1.699ex"
+              height="1.545ex" role="img" focusable="false" viewBox="0 -683 751 683">
+              <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)">
+                <g data-mml-node="math">
+                  <g data-mml-node="mi">
+                    <path data-c="1D443"
+                      d="M287 628Q287 635 230 637Q206 637 199 638T192 648Q192 649 194 659Q200 679 203 681T397 683Q587 682 600 680Q664 669 707 631T751 530Q751 453 685 389Q616 321 507 303Q500 302 402 301H307L277 182Q247 66 247 59Q247 55 248 54T255 50T272 48T305 46H336Q342 37 342 35Q342 19 335 5Q330 0 319 0Q316 0 282 1T182 2Q120 2 87 2T51 1Q33 1 33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM645 554Q645 567 643 575T634 597T609 619T560 635Q553 636 480 637Q463 637 445 637T416 636T404 636Q391 635 386 627Q384 621 367 550T332 412T314 344Q314 342 395 342H407H430Q542 342 590 392Q617 419 631 471T645 554Z">
+                    </path>
+                  </g>
+                </g>
+              </g>
+            </svg></mjx-container> scale the tokens to give <mjx-container class="im" class="MathJax" jax="SVG"><svg
+              style="vertical-align: -0.05ex;" xmlns="http://www.w3.org/2000/svg" width="3.582ex" height="1.595ex"
+              role="img" focusable="false" viewBox="0 -683 1583.1 705">
+              <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)">
+                <g data-mml-node="math">
+                  <g data-mml-node="msup">
+                    <g data-mml-node="mi">
+                      <path data-c="1D449"
+                        d="M52 648Q52 670 65 683H76Q118 680 181 680Q299 680 320 683H330Q336 677 336 674T334 656Q329 641 325 637H304Q282 635 274 635Q245 630 242 620Q242 618 271 369T301 118L374 235Q447 352 520 471T595 594Q599 601 599 609Q599 633 555 637Q537 637 537 648Q537 649 539 661Q542 675 545 679T558 683Q560 683 570 683T604 682T668 681Q737 681 755 683H762Q769 676 769 672Q769 655 760 640Q757 637 743 637Q730 636 719 635T698 630T682 623T670 615T660 608T652 599T645 592L452 282Q272 -9 266 -16Q263 -18 259 -21L241 -22H234Q216 -22 216 -15Q213 -9 177 305Q139 623 138 626Q133 637 76 637H59Q52 642 52 648Z">
+                      </path>
+                    </g>
+                    <g data-mml-node="TeXAtom" transform="translate(861.3,363) scale(0.707)" data-mjx-texclass="ORD">
+                      <g data-mml-node="TeXAtom" data-mjx-texclass="ORD">
+                        <g data-mml-node="mi">
+                          <path data-c="73"
+                            d="M295 316Q295 356 268 385T190 414Q154 414 128 401Q98 382 98 349Q97 344 98 336T114 312T157 287Q175 282 201 278T245 269T277 256Q294 248 310 236T342 195T359 133Q359 71 321 31T198 -10H190Q138 -10 94 26L86 19L77 10Q71 4 65 -1L54 -11H46H42Q39 -11 33 -5V74V132Q33 153 35 157T45 162H54Q66 162 70 158T75 146T82 119T101 77Q136 26 198 26Q295 26 295 104Q295 133 277 151Q257 175 194 187T111 210Q75 227 54 256T33 318Q33 357 50 384T93 424T143 442T187 447H198Q238 447 268 432L283 424L292 431Q302 440 314 448H322H326Q329 448 335 442V310L329 304H301Q295 310 295 316Z">
+                          </path>
+                          <path data-c="70"
+                            d="M36 -148H50Q89 -148 97 -134V-126Q97 -119 97 -107T97 -77T98 -38T98 6T98 55T98 106Q98 140 98 177T98 243T98 296T97 335T97 351Q94 370 83 376T38 385H20V408Q20 431 22 431L32 432Q42 433 61 434T98 436Q115 437 135 438T165 441T176 442H179V416L180 390L188 397Q247 441 326 441Q407 441 464 377T522 216Q522 115 457 52T310 -11Q242 -11 190 33L182 40V-45V-101Q182 -128 184 -134T195 -145Q216 -148 244 -148H260V-194H252L228 -193Q205 -192 178 -192T140 -191Q37 -191 28 -194H20V-148H36ZM424 218Q424 292 390 347T305 402Q234 402 182 337V98Q222 26 294 26Q345 26 384 80T424 218Z"
+                            transform="translate(394,0)"></path>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </svg></mjx-container>. Adding the foreground-gated temporal residual gives <mjx-container class="im"
+            class="MathJax" jax="SVG"><svg style="vertical-align: -0.439ex;" xmlns="http://www.w3.org/2000/svg"
+              width="14.201ex" height="2.271ex" role="img" focusable="false" viewBox="0 -810 6276.8 1004">
+              <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)">
+                <g data-mml-node="math">
+                  <g data-mml-node="msup">
+                    <g data-mml-node="mi">
+                      <path data-c="1D449"
+                        d="M52 648Q52 670 65 683H76Q118 680 181 680Q299 680 320 683H330Q336 677 336 674T334 656Q329 641 325 637H304Q282 635 274 635Q245 630 242 620Q242 618 271 369T301 118L374 235Q447 352 520 471T595 594Q599 601 599 609Q599 633 555 637Q537 637 537 648Q537 649 539 661Q542 675 545 679T558 683Q560 683 570 683T604 682T668 681Q737 681 755 683H762Q769 676 769 672Q769 655 760 640Q757 637 743 637Q730 636 719 635T698 630T682 623T670 615T660 608T652 599T645 592L452 282Q272 -9 266 -16Q263 -18 259 -21L241 -22H234Q216 -22 216 -15Q213 -9 177 305Q139 623 138 626Q133 637 76 637H59Q52 642 52 648Z">
+                      </path>
+                    </g>
+                    <g data-mml-node="mo" transform="translate(861.3,363) scale(0.707)">
+                      <path data-c="2032"
+                        d="M79 43Q73 43 52 49T30 61Q30 68 85 293T146 528Q161 560 198 560Q218 560 240 545T262 501Q262 496 260 486Q259 479 173 263T84 45T79 43Z">
+                      </path>
+                    </g>
+                  </g>
+                  <g data-mml-node="mo" transform="translate(1383.5,0)">
+                    <path data-c="3D"
+                      d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z">
+                    </path>
+                  </g>
+                  <g data-mml-node="msup" transform="translate(2439.3,0)">
+                    <g data-mml-node="mi">
+                      <path data-c="1D449"
+                        d="M52 648Q52 670 65 683H76Q118 680 181 680Q299 680 320 683H330Q336 677 336 674T334 656Q329 641 325 637H304Q282 635 274 635Q245 630 242 620Q242 618 271 369T301 118L374 235Q447 352 520 471T595 594Q599 601 599 609Q599 633 555 637Q537 637 537 648Q537 649 539 661Q542 675 545 679T558 683Q560 683 570 683T604 682T668 681Q737 681 755 683H762Q769 676 769 672Q769 655 760 640Q757 637 743 637Q730 636 719 635T698 630T682 623T670 615T660 608T652 599T645 592L452 282Q272 -9 266 -16Q263 -18 259 -21L241 -22H234Q216 -22 216 -15Q213 -9 177 305Q139 623 138 626Q133 637 76 637H59Q52 642 52 648Z">
+                      </path>
+                    </g>
+                    <g data-mml-node="TeXAtom" transform="translate(861.3,363) scale(0.707)" data-mjx-texclass="ORD">
+                      <g data-mml-node="TeXAtom" data-mjx-texclass="ORD">
+                        <g data-mml-node="mi">
+                          <path data-c="73"
+                            d="M295 316Q295 356 268 385T190 414Q154 414 128 401Q98 382 98 349Q97 344 98 336T114 312T157 287Q175 282 201 278T245 269T277 256Q294 248 310 236T342 195T359 133Q359 71 321 31T198 -10H190Q138 -10 94 26L86 19L77 10Q71 4 65 -1L54 -11H46H42Q39 -11 33 -5V74V132Q33 153 35 157T45 162H54Q66 162 70 158T75 146T82 119T101 77Q136 26 198 26Q295 26 295 104Q295 133 277 151Q257 175 194 187T111 210Q75 227 54 256T33 318Q33 357 50 384T93 424T143 442T187 447H198Q238 447 268 432L283 424L292 431Q302 440 314 448H322H326Q329 448 335 442V310L329 304H301Q295 310 295 316Z">
+                          </path>
+                          <path data-c="70"
+                            d="M36 -148H50Q89 -148 97 -134V-126Q97 -119 97 -107T97 -77T98 -38T98 6T98 55T98 106Q98 140 98 177T98 243T98 296T97 335T97 351Q94 370 83 376T38 385H20V408Q20 431 22 431L32 432Q42 433 61 434T98 436Q115 437 135 438T165 441T176 442H179V416L180 390L188 397Q247 441 326 441Q407 441 464 377T522 216Q522 115 457 52T310 -11Q242 -11 190 33L182 40V-45V-101Q182 -128 184 -134T195 -145Q216 -148 244 -148H260V-194H252L228 -193Q205 -192 178 -192T140 -191Q37 -191 28 -194H20V-148H36ZM424 218Q424 292 390 347T305 402Q234 402 182 337V98Q222 26 294 26Q345 26 384 80T424 218Z"
+                            transform="translate(394,0)"></path>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                  <g data-mml-node="mo" transform="translate(4244.6,0)">
+                    <path data-c="2B"
+                      d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z">
+                    </path>
+                  </g>
+                  <g data-mml-node="mi" transform="translate(5244.8,0)">
+                    <path data-c="1D6FD"
+                      d="M29 -194Q23 -188 23 -186Q23 -183 102 134T186 465Q208 533 243 584T309 658Q365 705 429 705H431Q493 705 533 667T573 570Q573 465 469 396L482 383Q533 332 533 252Q533 139 448 65T257 -10Q227 -10 203 -2T165 17T143 40T131 59T126 65L62 -188Q60 -194 42 -194H29ZM353 431Q392 431 427 419L432 422Q436 426 439 429T449 439T461 453T472 471T484 495T493 524T501 560Q503 569 503 593Q503 611 502 616Q487 667 426 667Q384 667 347 643T286 582T247 514T224 455Q219 439 186 308T152 168Q151 163 151 147Q151 99 173 68Q204 26 260 26Q302 26 349 51T425 137Q441 171 449 214T457 279Q457 337 422 372Q380 358 347 358H337Q258 358 258 389Q258 396 261 403Q275 431 353 431Z">
+                    </path>
+                  </g>
+                  <g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(5810.8,0)">
+                    <g data-mml-node="mover">
+                      <g data-mml-node="mi">
+                        <path data-c="1D452"
+                          d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z">
+                        </path>
+                      </g>
+                      <g data-mml-node="mo" transform="translate(288.6,16) translate(-250 0)">
+                        <path data-c="5E"
+                          d="M112 560L249 694L257 686Q387 562 387 560L361 531Q359 532 303 581L250 627L195 580Q182 569 169 557T148 538L140 532Q138 530 125 546L112 560Z">
+                        </path>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </svg></mjx-container>, without parameter updates.</figcaption>
+      </figure>
+      <div class="props"><span>No training</span><span>One forward pass</span><span>Masks once per video</span><span>No
+          tracking or optical flow</span></div>
+      <div class="split" style="margin-top:6px">
+        <div>
+          <h3>Persistence-guided spatial enhancement</h3>
+          <p>Each visual token is scaled by the fraction of it covered by the foreground at step <mjx-container
+              class="im" class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;"
+                xmlns="http://www.w3.org/2000/svg" width="0.817ex" height="1.441ex" role="img" focusable="false"
+                viewBox="0 -626 361 637">
+                <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)">
+                  <g data-mml-node="math">
+                    <g data-mml-node="mi">
+                      <path data-c="1D461"
+                        d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z">
+                      </path>
+                    </g>
+                  </g>
+                </g>
+              </svg></mjx-container>, and by how often the foreground occupies its position over the clip, so that a
+            frame whose mask misses the subject still inherits it from the others.</p>
+          <div class="math"><mjx-container class="MathJax" jax="SVG" display="true"><svg
+                style="vertical-align: -2.819ex;" xmlns="http://www.w3.org/2000/svg" width="15.541ex" height="6.73ex"
+                role="img" focusable="false" viewBox="0 -1728.7 6869.1 2974.6">
+                <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)">
+                  <g data-mml-node="math">
+                    <g data-mml-node="msub">
+                      <g data-mml-node="mi">
+                        <path data-c="1D443"
+                          d="M287 628Q287 635 230 637Q206 637 199 638T192 648Q192 649 194 659Q200 679 203 681T397 683Q587 682 600 680Q664 669 707 631T751 530Q751 453 685 389Q616 321 507 303Q500 302 402 301H307L277 182Q247 66 247 59Q247 55 248 54T255 50T272 48T305 46H336Q342 37 342 35Q342 19 335 5Q330 0 319 0Q316 0 282 1T182 2Q120 2 87 2T51 1Q33 1 33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM645 554Q645 567 643 575T634 597T609 619T560 635Q553 636 480 637Q463 637 445 637T416 636T404 636Q391 635 386 627Q384 621 367 550T332 412T314 344Q314 342 395 342H407H430Q542 342 590 392Q617 419 631 471T645 554Z">
+                        </path>
+                      </g>
+                      <g data-mml-node="mi" transform="translate(675,-150) scale(0.707)">
+                        <path data-c="1D45D"
+                          d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z">
+                        </path>
+                      </g>
+                    </g>
+                    <g data-mml-node="mo" transform="translate(1358.5,0)">
+                      <path data-c="3D"
+                        d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z">
+                      </path>
+                    </g>
+                    <g data-mml-node="mfrac" transform="translate(2414.2,0)">
+                      <g data-mml-node="mn" transform="translate(322,676)">
+                        <path data-c="31"
+                          d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z">
+                        </path>
+                      </g>
+                      <g data-mml-node="mi" transform="translate(220,-686)">
+                        <path data-c="1D447"
+                          d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z">
+                        </path>
+                      </g>
+                      <rect width="904" height="60" x="120" y="220"></rect>
+                    </g>
+                    <g data-mml-node="munderover" transform="translate(3724.9,0)">
+                      <g data-mml-node="mo">
+                        <path data-c="2211"
+                          d="M60 948Q63 950 665 950H1267L1325 815Q1384 677 1388 669H1348L1341 683Q1320 724 1285 761Q1235 809 1174 838T1033 881T882 898T699 902H574H543H251L259 891Q722 258 724 252Q725 250 724 246Q721 243 460 -56L196 -356Q196 -357 407 -357Q459 -357 548 -357T676 -358Q812 -358 896 -353T1063 -332T1204 -283T1307 -196Q1328 -170 1348 -124H1388Q1388 -125 1381 -145T1356 -210T1325 -294L1267 -449L666 -450Q64 -450 61 -448Q55 -446 55 -439Q55 -437 57 -433L590 177Q590 178 557 222T452 366T322 544L56 909L55 924Q55 945 60 948Z">
+                        </path>
+                      </g>
+                      <g data-mml-node="TeXAtom" transform="translate(142.5,-1087.9) scale(0.707)"
+                        data-mjx-texclass="ORD">
+                        <g data-mml-node="mi">
+                          <path data-c="1D461"
+                            d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z">
+                          </path>
+                        </g>
+                        <g data-mml-node="mo" transform="translate(361,0)">
+                          <path data-c="3D"
+                            d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z">
+                          </path>
+                        </g>
+                        <g data-mml-node="mn" transform="translate(1139,0)">
+                          <path data-c="31"
+                            d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z">
+                          </path>
+                        </g>
+                      </g>
+                      <g data-mml-node="TeXAtom" transform="translate(473.1,1150) scale(0.707)" data-mjx-texclass="ORD">
+                        <g data-mml-node="mi">
+                          <path data-c="1D447"
+                            d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z">
+                          </path>
+                        </g>
+                      </g>
+                    </g>
+                    <g data-mml-node="msub" transform="translate(5335.6,0)">
+                      <g data-mml-node="mi">
+                        <path data-c="1D439"
+                          d="M48 1Q31 1 31 11Q31 13 34 25Q38 41 42 43T65 46Q92 46 125 49Q139 52 144 61Q146 66 215 342T285 622Q285 629 281 629Q273 632 228 634H197Q191 640 191 642T193 659Q197 676 203 680H742Q749 676 749 669Q749 664 736 557T722 447Q720 440 702 440H690Q683 445 683 453Q683 454 686 477T689 530Q689 560 682 579T663 610T626 626T575 633T503 634H480Q398 633 393 631Q388 629 386 623Q385 622 352 492L320 363H375Q378 363 398 363T426 364T448 367T472 374T489 386Q502 398 511 419T524 457T529 475Q532 480 548 480H560Q567 475 567 470Q567 467 536 339T502 207Q500 200 482 200H470Q463 206 463 212Q463 215 468 234T473 274Q473 303 453 310T364 317H309L277 190Q245 66 245 60Q245 46 334 46H359Q365 40 365 39T363 19Q359 6 353 0H336Q295 2 185 2Q120 2 86 2T48 1Z">
+                        </path>
+                      </g>
+                      <g data-mml-node="TeXAtom" transform="translate(676,-150) scale(0.707)" data-mjx-texclass="ORD">
+                        <g data-mml-node="mi">
+                          <path data-c="1D461"
+                            d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z">
+                          </path>
+                        </g>
+                        <g data-mml-node="mo" transform="translate(361,0)">
+                          <path data-c="2C"
+                            d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z">
+                          </path>
+                        </g>
+                        <g data-mml-node="mi" transform="translate(639,0)">
+                          <path data-c="1D45D"
+                            d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z">
+                          </path>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </svg></mjx-container></div>
+          <div class="math"><mjx-container class="MathJax" jax="SVG" display="true"><svg
+                style="vertical-align: -0.919ex;" xmlns="http://www.w3.org/2000/svg" width="28.794ex" height="2.841ex"
+                role="img" focusable="false" viewBox="0 -849.5 12726.8 1255.7">
+                <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)">
+                  <g data-mml-node="math">
+                    <g data-mml-node="msubsup">
+                      <g data-mml-node="mi">
+                        <path data-c="1D449"
+                          d="M52 648Q52 670 65 683H76Q118 680 181 680Q299 680 320 683H330Q336 677 336 674T334 656Q329 641 325 637H304Q282 635 274 635Q245 630 242 620Q242 618 271 369T301 118L374 235Q447 352 520 471T595 594Q599 601 599 609Q599 633 555 637Q537 637 537 648Q537 649 539 661Q542 675 545 679T558 683Q560 683 570 683T604 682T668 681Q737 681 755 683H762Q769 676 769 672Q769 655 760 640Q757 637 743 637Q730 636 719 635T698 630T682 623T670 615T660 608T652 599T645 592L452 282Q272 -9 266 -16Q263 -18 259 -21L241 -22H234Q216 -22 216 -15Q213 -9 177 305Q139 623 138 626Q133 637 76 637H59Q52 642 52 648Z">
+                        </path>
+                      </g>
+                      <g data-mml-node="TeXAtom" transform="translate(861.3,490.8) scale(0.707)"
+                        data-mjx-texclass="ORD">
+                        <g data-mml-node="TeXAtom" data-mjx-texclass="ORD">
+                          <g data-mml-node="mi">
+                            <path data-c="73"
+                              d="M295 316Q295 356 268 385T190 414Q154 414 128 401Q98 382 98 349Q97 344 98 336T114 312T157 287Q175 282 201 278T245 269T277 256Q294 248 310 236T342 195T359 133Q359 71 321 31T198 -10H190Q138 -10 94 26L86 19L77 10Q71 4 65 -1L54 -11H46H42Q39 -11 33 -5V74V132Q33 153 35 157T45 162H54Q66 162 70 158T75 146T82 119T101 77Q136 26 198 26Q295 26 295 104Q295 133 277 151Q257 175 194 187T111 210Q75 227 54 256T33 318Q33 357 50 384T93 424T143 442T187 447H198Q238 447 268 432L283 424L292 431Q302 440 314 448H322H326Q329 448 335 442V310L329 304H301Q295 310 295 316Z">
+                            </path>
+                            <path data-c="70"
+                              d="M36 -148H50Q89 -148 97 -134V-126Q97 -119 97 -107T97 -77T98 -38T98 6T98 55T98 106Q98 140 98 177T98 243T98 296T97 335T97 351Q94 370 83 376T38 385H20V408Q20 431 22 431L32 432Q42 433 61 434T98 436Q115 437 135 438T165 441T176 442H179V416L180 390L188 397Q247 441 326 441Q407 441 464 377T522 216Q522 115 457 52T310 -11Q242 -11 190 33L182 40V-45V-101Q182 -128 184 -134T195 -145Q216 -148 244 -148H260V-194H252L228 -193Q205 -192 178 -192T140 -191Q37 -191 28 -194H20V-148H36ZM424 218Q424 292 390 347T305 402Q234 402 182 337V98Q222 26 294 26Q345 26 384 80T424 218Z"
+                              transform="translate(394,0)"></path>
+                          </g>
+                        </g>
+                      </g>
+                      <g data-mml-node="TeXAtom" transform="translate(616,-269) scale(0.707)" data-mjx-texclass="ORD">
+                        <g data-mml-node="mi">
+                          <path data-c="1D461"
+                            d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z">
+                          </path>
+                        </g>
+                        <g data-mml-node="mo" transform="translate(361,0)">
+                          <path data-c="2C"
+                            d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z">
+                          </path>
+                        </g>
+                        <g data-mml-node="mi" transform="translate(639,0)">
+                          <path data-c="1D45D"
+                            d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z">
+                          </path>
+                        </g>
+                      </g>
+                    </g>
+                    <g data-mml-node="mo" transform="translate(1860.8,0)">
+                      <path data-c="3D"
+                        d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z">
+                      </path>
+                    </g>
+                    <g data-mml-node="TeXAtom" data-mjx-texclass="OPEN" transform="translate(2916.6,0)">
+                      <g data-mml-node="mo" transform="translate(0 -0.5)">
+                        <path data-c="28"
+                          d="M152 251Q152 646 388 850H416Q422 844 422 841Q422 837 403 816T357 753T302 649T255 482T236 250Q236 124 255 19T301 -147T356 -251T403 -315T422 -340Q422 -343 416 -349H388Q359 -325 332 -296T271 -213T212 -97T170 56T152 251Z">
+                        </path>
+                      </g>
+                    </g>
+                    <g data-mml-node="mn" transform="translate(3374.6,0)">
+                      <path data-c="31"
+                        d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z">
+                      </path>
+                    </g>
+                    <g data-mml-node="mo" transform="translate(4096.8,0)">
+                      <path data-c="2B"
+                        d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z">
+                      </path>
+                    </g>
+                    <g data-mml-node="mi" transform="translate(5097.1,0)">
+                      <path data-c="1D6FC"
+                        d="M34 156Q34 270 120 356T309 442Q379 442 421 402T478 304Q484 275 485 237V208Q534 282 560 374Q564 388 566 390T582 393Q603 393 603 385Q603 376 594 346T558 261T497 161L486 147L487 123Q489 67 495 47T514 26Q528 28 540 37T557 60Q559 67 562 68T577 70Q597 70 597 62Q597 56 591 43Q579 19 556 5T512 -10H505Q438 -10 414 62L411 69L400 61Q390 53 370 41T325 18T267 -2T203 -11Q124 -11 79 39T34 156ZM208 26Q257 26 306 47T379 90L403 112Q401 255 396 290Q382 405 304 405Q235 405 183 332Q156 292 139 224T121 120Q121 71 146 49T208 26Z">
+                      </path>
+                    </g>
+                    <g data-mml-node="msub" transform="translate(5737.1,0)">
+                      <g data-mml-node="mi">
+                        <path data-c="1D439"
+                          d="M48 1Q31 1 31 11Q31 13 34 25Q38 41 42 43T65 46Q92 46 125 49Q139 52 144 61Q146 66 215 342T285 622Q285 629 281 629Q273 632 228 634H197Q191 640 191 642T193 659Q197 676 203 680H742Q749 676 749 669Q749 664 736 557T722 447Q720 440 702 440H690Q683 445 683 453Q683 454 686 477T689 530Q689 560 682 579T663 610T626 626T575 633T503 634H480Q398 633 393 631Q388 629 386 623Q385 622 352 492L320 363H375Q378 363 398 363T426 364T448 367T472 374T489 386Q502 398 511 419T524 457T529 475Q532 480 548 480H560Q567 475 567 470Q567 467 536 339T502 207Q500 200 482 200H470Q463 206 463 212Q463 215 468 234T473 274Q473 303 453 310T364 317H309L277 190Q245 66 245 60Q245 46 334 46H359Q365 40 365 39T363 19Q359 6 353 0H336Q295 2 185 2Q120 2 86 2T48 1Z">
+                        </path>
+                      </g>
+                      <g data-mml-node="TeXAtom" transform="translate(676,-150) scale(0.707)" data-mjx-texclass="ORD">
+                        <g data-mml-node="mi">
+                          <path data-c="1D461"
+                            d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z">
+                          </path>
+                        </g>
+                        <g data-mml-node="mo" transform="translate(361,0)">
+                          <path data-c="2C"
+                            d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z">
+                          </path>
+                        </g>
+                        <g data-mml-node="mi" transform="translate(639,0)">
+                          <path data-c="1D45D"
+                            d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z">
+                          </path>
+                        </g>
+                      </g>
+                    </g>
+                    <g data-mml-node="mo" transform="translate(7492.8,0)">
+                      <path data-c="2B"
+                        d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z">
+                      </path>
+                    </g>
+                    <g data-mml-node="msub" transform="translate(8493,0)">
+                      <g data-mml-node="mi">
+                        <path data-c="1D6FC"
+                          d="M34 156Q34 270 120 356T309 442Q379 442 421 402T478 304Q484 275 485 237V208Q534 282 560 374Q564 388 566 390T582 393Q603 393 603 385Q603 376 594 346T558 261T497 161L486 147L487 123Q489 67 495 47T514 26Q528 28 540 37T557 60Q559 67 562 68T577 70Q597 70 597 62Q597 56 591 43Q579 19 556 5T512 -10H505Q438 -10 414 62L411 69L400 61Q390 53 370 41T325 18T267 -2T203 -11Q124 -11 79 39T34 156ZM208 26Q257 26 306 47T379 90L403 112Q401 255 396 290Q382 405 304 405Q235 405 183 332Q156 292 139 224T121 120Q121 71 146 49T208 26Z">
+                        </path>
+                      </g>
+                      <g data-mml-node="mi" transform="translate(673,-150) scale(0.707)">
+                        <path data-c="1D460"
+                          d="M131 289Q131 321 147 354T203 415T300 442Q362 442 390 415T419 355Q419 323 402 308T364 292Q351 292 340 300T328 326Q328 342 337 354T354 372T367 378Q368 378 368 379Q368 382 361 388T336 399T297 405Q249 405 227 379T204 326Q204 301 223 291T278 274T330 259Q396 230 396 163Q396 135 385 107T352 51T289 7T195 -10Q118 -10 86 19T53 87Q53 126 74 143T118 160Q133 160 146 151T160 120Q160 94 142 76T111 58Q109 57 108 57T107 55Q108 52 115 47T146 34T201 27Q237 27 263 38T301 66T318 97T323 122Q323 150 302 164T254 181T195 196T148 231Q131 256 131 289Z">
+                        </path>
+                      </g>
+                    </g>
+                    <g data-mml-node="msub" transform="translate(9547.6,0)">
+                      <g data-mml-node="mi">
+                        <path data-c="1D443"
+                          d="M287 628Q287 635 230 637Q206 637 199 638T192 648Q192 649 194 659Q200 679 203 681T397 683Q587 682 600 680Q664 669 707 631T751 530Q751 453 685 389Q616 321 507 303Q500 302 402 301H307L277 182Q247 66 247 59Q247 55 248 54T255 50T272 48T305 46H336Q342 37 342 35Q342 19 335 5Q330 0 319 0Q316 0 282 1T182 2Q120 2 87 2T51 1Q33 1 33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM645 554Q645 567 643 575T634 597T609 619T560 635Q553 636 480 637Q463 637 445 637T416 636T404 636Q391 635 386 627Q384 621 367 550T332 412T314 344Q314 342 395 342H407H430Q542 342 590 392Q617 419 631 471T645 554Z">
+                        </path>
+                      </g>
+                      <g data-mml-node="mi" transform="translate(675,-150) scale(0.707)">
+                        <path data-c="1D45D"
+                          d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z">
+                        </path>
+                      </g>
+                    </g>
+                    <g data-mml-node="TeXAtom" data-mjx-texclass="CLOSE" transform="translate(10628.3,0)">
+                      <g data-mml-node="mo" transform="translate(0 -0.5)">
+                        <path data-c="29"
+                          d="M305 251Q305 -145 69 -349H56Q43 -349 39 -347T35 -338Q37 -333 60 -307T108 -239T160 -136T204 27T221 250T204 473T160 636T108 740T60 807T35 839Q35 850 50 850H56H69Q197 743 256 566Q305 425 305 251Z">
+                        </path>
+                      </g>
+                    </g>
+                    <g data-mml-node="mstyle" transform="translate(11086.3,0)">
+                      <g data-mml-node="mspace"></g>
+                    </g>
+                    <g data-mml-node="msub" transform="translate(11253.3,0)">
+                      <g data-mml-node="mi">
+                        <path data-c="1D449"
+                          d="M52 648Q52 670 65 683H76Q118 680 181 680Q299 680 320 683H330Q336 677 336 674T334 656Q329 641 325 637H304Q282 635 274 635Q245 630 242 620Q242 618 271 369T301 118L374 235Q447 352 520 471T595 594Q599 601 599 609Q599 633 555 637Q537 637 537 648Q537 649 539 661Q542 675 545 679T558 683Q560 683 570 683T604 682T668 681Q737 681 755 683H762Q769 676 769 672Q769 655 760 640Q757 637 743 637Q730 636 719 635T698 630T682 623T670 615T660 608T652 599T645 592L452 282Q272 -9 266 -16Q263 -18 259 -21L241 -22H234Q216 -22 216 -15Q213 -9 177 305Q139 623 138 626Q133 637 76 637H59Q52 642 52 648Z">
+                        </path>
+                      </g>
+                      <g data-mml-node="TeXAtom" transform="translate(616,-150) scale(0.707)" data-mjx-texclass="ORD">
+                        <g data-mml-node="mi">
+                          <path data-c="1D461"
+                            d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z">
+                          </path>
+                        </g>
+                        <g data-mml-node="mo" transform="translate(361,0)">
+                          <path data-c="2C"
+                            d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z">
+                          </path>
+                        </g>
+                        <g data-mml-node="mi" transform="translate(639,0)">
+                          <path data-c="1D45D"
+                            d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z">
+                          </path>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </svg></mjx-container></div>
+        </div>
+        <div>
+          <h3>Foreground-gated temporal residual</h3>
+          <p>The spatial term does not depend on the order of the steps. We add the change between adjacent steps to the
+            tokens, norm-matched so that one coefficient controls its strength, and gated by the foreground.</p>
+          <div class="math"><mjx-container class="MathJax" jax="SVG" display="true"><svg
+                style="vertical-align: -2.256ex;" xmlns="http://www.w3.org/2000/svg" width="36.303ex" height="5.492ex"
+                role="img" focusable="false" viewBox="0 -1430.2 16045.8 2427.4">
+                <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)">
+                  <g data-mml-node="math">
+                    <g data-mml-node="msub">
+                      <g data-mml-node="TeXAtom" data-mjx-texclass="ORD">
+                        <g data-mml-node="mover">
+                          <g data-mml-node="mi">
+                            <path data-c="1D452"
+                              d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z">
+                            </path>
+                          </g>
+                          <g data-mml-node="mo" transform="translate(288.6,16) translate(-250 0)">
+                            <path data-c="5E"
+                              d="M112 560L249 694L257 686Q387 562 387 560L361 531Q359 532 303 581L250 627L195 580Q182 569 169 557T148 538L140 532Q138 530 125 546L112 560Z">
+                            </path>
+                          </g>
+                        </g>
+                      </g>
+                      <g data-mml-node="TeXAtom" transform="translate(499,-150) scale(0.707)" data-mjx-texclass="ORD">
+                        <g data-mml-node="mi">
+                          <path data-c="1D461"
+                            d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z">
+                          </path>
+                        </g>
+                        <g data-mml-node="mo" transform="translate(361,0)">
+                          <path data-c="2C"
+                            d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z">
+                          </path>
+                        </g>
+                        <g data-mml-node="mi" transform="translate(639,0)">
+                          <path data-c="1D45D"
+                            d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z">
+                          </path>
+                        </g>
+                      </g>
+                    </g>
+                    <g data-mml-node="mo" transform="translate(1634.3,0)">
+                      <path data-c="3D"
+                        d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z">
+                      </path>
+                    </g>
+                    <g data-mml-node="msub" transform="translate(2690.1,0)">
+                      <g data-mml-node="mi">
+                        <path data-c="1D439"
+                          d="M48 1Q31 1 31 11Q31 13 34 25Q38 41 42 43T65 46Q92 46 125 49Q139 52 144 61Q146 66 215 342T285 622Q285 629 281 629Q273 632 228 634H197Q191 640 191 642T193 659Q197 676 203 680H742Q749 676 749 669Q749 664 736 557T722 447Q720 440 702 440H690Q683 445 683 453Q683 454 686 477T689 530Q689 560 682 579T663 610T626 626T575 633T503 634H480Q398 633 393 631Q388 629 386 623Q385 622 352 492L320 363H375Q378 363 398 363T426 364T448 367T472 374T489 386Q502 398 511 419T524 457T529 475Q532 480 548 480H560Q567 475 567 470Q567 467 536 339T502 207Q500 200 482 200H470Q463 206 463 212Q463 215 468 234T473 274Q473 303 453 310T364 317H309L277 190Q245 66 245 60Q245 46 334 46H359Q365 40 365 39T363 19Q359 6 353 0H336Q295 2 185 2Q120 2 86 2T48 1Z">
+                        </path>
+                      </g>
+                      <g data-mml-node="TeXAtom" transform="translate(676,-150) scale(0.707)" data-mjx-texclass="ORD">
+                        <g data-mml-node="mi">
+                          <path data-c="1D461"
+                            d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z">
+                          </path>
+                        </g>
+                        <g data-mml-node="mo" transform="translate(361,0)">
+                          <path data-c="2C"
+                            d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z">
+                          </path>
+                        </g>
+                        <g data-mml-node="mi" transform="translate(639,0)">
+                          <path data-c="1D45D"
+                            d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z">
+                          </path>
+                        </g>
+                      </g>
+                    </g>
+                    <g data-mml-node="mstyle" transform="translate(4223.6,0)">
+                      <g data-mml-node="mspace"></g>
+                    </g>
+                    <g data-mml-node="mfrac" transform="translate(4390.6,0)">
+                      <g data-mml-node="mrow" transform="translate(1752.5,747.2)">
+                        <g data-mml-node="msub">
+                          <g data-mml-node="mi">
+                            <path data-c="1D449"
+                              d="M52 648Q52 670 65 683H76Q118 680 181 680Q299 680 320 683H330Q336 677 336 674T334 656Q329 641 325 637H304Q282 635 274 635Q245 630 242 620Q242 618 271 369T301 118L374 235Q447 352 520 471T595 594Q599 601 599 609Q599 633 555 637Q537 637 537 648Q537 649 539 661Q542 675 545 679T558 683Q560 683 570 683T604 682T668 681Q737 681 755 683H762Q769 676 769 672Q769 655 760 640Q757 637 743 637Q730 636 719 635T698 630T682 623T670 615T660 608T652 599T645 592L452 282Q272 -9 266 -16Q263 -18 259 -21L241 -22H234Q216 -22 216 -15Q213 -9 177 305Q139 623 138 626Q133 637 76 637H59Q52 642 52 648Z">
+                            </path>
+                          </g>
+                          <g data-mml-node="TeXAtom" transform="translate(616,-150) scale(0.707)"
+                            data-mjx-texclass="ORD">
+                            <g data-mml-node="mi">
+                              <path data-c="1D461"
+                                d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z">
+                              </path>
+                            </g>
+                            <g data-mml-node="mo" transform="translate(361,0)">
+                              <path data-c="2C"
+                                d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z">
+                              </path>
+                            </g>
+                            <g data-mml-node="mi" transform="translate(639,0)">
+                              <path data-c="1D45D"
+                                d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z">
+                              </path>
+                            </g>
+                          </g>
+                        </g>
+                        <g data-mml-node="mo" transform="translate(1695.7,0)">
+                          <path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z">
+                          </path>
+                        </g>
+                        <g data-mml-node="msub" transform="translate(2696,0)">
+                          <g data-mml-node="mi">
+                            <path data-c="1D449"
+                              d="M52 648Q52 670 65 683H76Q118 680 181 680Q299 680 320 683H330Q336 677 336 674T334 656Q329 641 325 637H304Q282 635 274 635Q245 630 242 620Q242 618 271 369T301 118L374 235Q447 352 520 471T595 594Q599 601 599 609Q599 633 555 637Q537 637 537 648Q537 649 539 661Q542 675 545 679T558 683Q560 683 570 683T604 682T668 681Q737 681 755 683H762Q769 676 769 672Q769 655 760 640Q757 637 743 637Q730 636 719 635T698 630T682 623T670 615T660 608T652 599T645 592L452 282Q272 -9 266 -16Q263 -18 259 -21L241 -22H234Q216 -22 216 -15Q213 -9 177 305Q139 623 138 626Q133 637 76 637H59Q52 642 52 648Z">
+                            </path>
+                          </g>
+                          <g data-mml-node="TeXAtom" transform="translate(616,-150) scale(0.707)"
+                            data-mjx-texclass="ORD">
+                            <g data-mml-node="mi">
+                              <path data-c="1D461"
+                                d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z">
+                              </path>
+                            </g>
+                            <g data-mml-node="mo" transform="translate(361,0)">
+                              <path data-c="2212"
+                                d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path>
+                            </g>
+                            <g data-mml-node="mn" transform="translate(1139,0)">
+                              <path data-c="31"
+                                d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z">
+                              </path>
+                            </g>
+                            <g data-mml-node="mo" transform="translate(1639,0)">
+                              <path data-c="2C"
+                                d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z">
+                              </path>
+                            </g>
+                            <g data-mml-node="mi" transform="translate(1917,0)">
+                              <path data-c="1D45D"
+                                d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z">
+                              </path>
+                            </g>
+                          </g>
+                        </g>
+                      </g>
+                      <g data-mml-node="mrow" transform="translate(220,-710)">
+                        <g data-mml-node="mo">
+                          <path data-c="2016"
+                            d="M133 736Q138 750 153 750Q164 750 170 739Q172 735 172 250T170 -239Q164 -250 152 -250Q144 -250 138 -244L137 -243Q133 -241 133 -179T132 250Q132 731 133 736ZM329 739Q334 750 346 750Q353 750 361 744L362 743Q366 741 366 679T367 250T367 -178T362 -243L361 -244Q355 -250 347 -250Q335 -250 329 -239Q327 -235 327 250T329 739Z">
+                          </path>
+                        </g>
+                        <g data-mml-node="msub" transform="translate(500,0)">
+                          <g data-mml-node="mi">
+                            <path data-c="1D449"
+                              d="M52 648Q52 670 65 683H76Q118 680 181 680Q299 680 320 683H330Q336 677 336 674T334 656Q329 641 325 637H304Q282 635 274 635Q245 630 242 620Q242 618 271 369T301 118L374 235Q447 352 520 471T595 594Q599 601 599 609Q599 633 555 637Q537 637 537 648Q537 649 539 661Q542 675 545 679T558 683Q560 683 570 683T604 682T668 681Q737 681 755 683H762Q769 676 769 672Q769 655 760 640Q757 637 743 637Q730 636 719 635T698 630T682 623T670 615T660 608T652 599T645 592L452 282Q272 -9 266 -16Q263 -18 259 -21L241 -22H234Q216 -22 216 -15Q213 -9 177 305Q139 623 138 626Q133 637 76 637H59Q52 642 52 648Z">
+                            </path>
+                          </g>
+                          <g data-mml-node="TeXAtom" transform="translate(616,-150) scale(0.707)"
+                            data-mjx-texclass="ORD">
+                            <g data-mml-node="mi">
+                              <path data-c="1D461"
+                                d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z">
+                              </path>
+                            </g>
+                            <g data-mml-node="mo" transform="translate(361,0)">
+                              <path data-c="2C"
+                                d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z">
+                              </path>
+                            </g>
+                            <g data-mml-node="mi" transform="translate(639,0)">
+                              <path data-c="1D45D"
+                                d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z">
+                              </path>
+                            </g>
+                          </g>
+                        </g>
+                        <g data-mml-node="mo" transform="translate(2195.7,0)">
+                          <path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z">
+                          </path>
+                        </g>
+                        <g data-mml-node="msub" transform="translate(3196,0)">
+                          <g data-mml-node="mi">
+                            <path data-c="1D449"
+                              d="M52 648Q52 670 65 683H76Q118 680 181 680Q299 680 320 683H330Q336 677 336 674T334 656Q329 641 325 637H304Q282 635 274 635Q245 630 242 620Q242 618 271 369T301 118L374 235Q447 352 520 471T595 594Q599 601 599 609Q599 633 555 637Q537 637 537 648Q537 649 539 661Q542 675 545 679T558 683Q560 683 570 683T604 682T668 681Q737 681 755 683H762Q769 676 769 672Q769 655 760 640Q757 637 743 637Q730 636 719 635T698 630T682 623T670 615T660 608T652 599T645 592L452 282Q272 -9 266 -16Q263 -18 259 -21L241 -22H234Q216 -22 216 -15Q213 -9 177 305Q139 623 138 626Q133 637 76 637H59Q52 642 52 648Z">
+                            </path>
+                          </g>
+                          <g data-mml-node="TeXAtom" transform="translate(616,-150) scale(0.707)"
+                            data-mjx-texclass="ORD">
+                            <g data-mml-node="mi">
+                              <path data-c="1D461"
+                                d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z">
+                              </path>
+                            </g>
+                            <g data-mml-node="mo" transform="translate(361,0)">
+                              <path data-c="2212"
+                                d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path>
+                            </g>
+                            <g data-mml-node="mn" transform="translate(1139,0)">
+                              <path data-c="31"
+                                d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z">
+                              </path>
+                            </g>
+                            <g data-mml-node="mo" transform="translate(1639,0)">
+                              <path data-c="2C"
+                                d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z">
+                              </path>
+                            </g>
+                            <g data-mml-node="mi" transform="translate(1917,0)">
+                              <path data-c="1D45D"
+                                d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z">
+                              </path>
+                            </g>
+                          </g>
+                        </g>
+                        <g data-mml-node="msub" transform="translate(5573.2,0)">
+                          <g data-mml-node="mo">
+                            <path data-c="2016"
+                              d="M133 736Q138 750 153 750Q164 750 170 739Q172 735 172 250T170 -239Q164 -250 152 -250Q144 -250 138 -244L137 -243Q133 -241 133 -179T132 250Q132 731 133 736ZM329 739Q334 750 346 750Q353 750 361 744L362 743Q366 741 366 679T367 250T367 -178T362 -243L361 -244Q355 -250 347 -250Q335 -250 329 -239Q327 -235 327 250T329 739Z">
+                            </path>
+                          </g>
+                          <g data-mml-node="mn" transform="translate(533,-150) scale(0.707)">
+                            <path data-c="32"
+                              d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z">
+                            </path>
+                          </g>
+                        </g>
+                        <g data-mml-node="mo" transform="translate(6731.9,0)">
+                          <path data-c="2B"
+                            d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z">
+                          </path>
+                        </g>
+                        <g data-mml-node="mi" transform="translate(7732.2,0)">
+                          <path data-c="1D716"
+                            d="M227 -11Q149 -11 95 41T40 174Q40 262 87 322Q121 367 173 396T287 430Q289 431 329 431H367Q382 426 382 411Q382 385 341 385H325H312Q191 385 154 277L150 265H327Q340 256 340 246Q340 228 320 219H138V217Q128 187 128 143Q128 77 160 52T231 26Q258 26 284 36T326 57T343 68Q350 68 354 58T358 39Q358 36 357 35Q354 31 337 21T289 0T227 -11Z">
+                          </path>
+                        </g>
+                      </g>
+                      <rect width="8338.2" height="60" x="120" y="220"></rect>
+                    </g>
+                    <g data-mml-node="mstyle" transform="translate(12968.7,0)">
+                      <g data-mml-node="mspace"></g>
+                    </g>
+                    <g data-mml-node="mo" transform="translate(13135.7,0)">
+                      <path data-c="2016"
+                        d="M133 736Q138 750 153 750Q164 750 170 739Q172 735 172 250T170 -239Q164 -250 152 -250Q144 -250 138 -244L137 -243Q133 -241 133 -179T132 250Q132 731 133 736ZM329 739Q334 750 346 750Q353 750 361 744L362 743Q366 741 366 679T367 250T367 -178T362 -243L361 -244Q355 -250 347 -250Q335 -250 329 -239Q327 -235 327 250T329 739Z">
+                      </path>
+                    </g>
+                    <g data-mml-node="msub" transform="translate(13635.7,0)">
+                      <g data-mml-node="mi">
+                        <path data-c="1D449"
+                          d="M52 648Q52 670 65 683H76Q118 680 181 680Q299 680 320 683H330Q336 677 336 674T334 656Q329 641 325 637H304Q282 635 274 635Q245 630 242 620Q242 618 271 369T301 118L374 235Q447 352 520 471T595 594Q599 601 599 609Q599 633 555 637Q537 637 537 648Q537 649 539 661Q542 675 545 679T558 683Q560 683 570 683T604 682T668 681Q737 681 755 683H762Q769 676 769 672Q769 655 760 640Q757 637 743 637Q730 636 719 635T698 630T682 623T670 615T660 608T652 599T645 592L452 282Q272 -9 266 -16Q263 -18 259 -21L241 -22H234Q216 -22 216 -15Q213 -9 177 305Q139 623 138 626Q133 637 76 637H59Q52 642 52 648Z">
+                        </path>
+                      </g>
+                      <g data-mml-node="TeXAtom" transform="translate(616,-150) scale(0.707)" data-mjx-texclass="ORD">
+                        <g data-mml-node="mi">
+                          <path data-c="1D461"
+                            d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z">
+                          </path>
+                        </g>
+                        <g data-mml-node="mo" transform="translate(361,0)">
+                          <path data-c="2C"
+                            d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z">
+                          </path>
+                        </g>
+                        <g data-mml-node="mi" transform="translate(639,0)">
+                          <path data-c="1D45D"
+                            d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z">
+                          </path>
+                        </g>
+                      </g>
+                    </g>
+                    <g data-mml-node="msub" transform="translate(15109.3,0)">
+                      <g data-mml-node="mo">
+                        <path data-c="2016"
+                          d="M133 736Q138 750 153 750Q164 750 170 739Q172 735 172 250T170 -239Q164 -250 152 -250Q144 -250 138 -244L137 -243Q133 -241 133 -179T132 250Q132 731 133 736ZM329 739Q334 750 346 750Q353 750 361 744L362 743Q366 741 366 679T367 250T367 -178T362 -243L361 -244Q355 -250 347 -250Q335 -250 329 -239Q327 -235 327 250T329 739Z">
+                        </path>
+                      </g>
+                      <g data-mml-node="mn" transform="translate(533,-150) scale(0.707)">
+                        <path data-c="32"
+                          d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z">
+                        </path>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </svg></mjx-container></div>
+          <div class="math"><mjx-container class="MathJax" jax="SVG" display="true"><svg
+                style="vertical-align: -0.919ex;" xmlns="http://www.w3.org/2000/svg" width="17.426ex" height="2.752ex"
+                role="img" focusable="false" viewBox="0 -810 7702.1 1216.2">
+                <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)">
+                  <g data-mml-node="math">
+                    <g data-mml-node="msubsup">
+                      <g data-mml-node="mi">
+                        <path data-c="1D449"
+                          d="M52 648Q52 670 65 683H76Q118 680 181 680Q299 680 320 683H330Q336 677 336 674T334 656Q329 641 325 637H304Q282 635 274 635Q245 630 242 620Q242 618 271 369T301 118L374 235Q447 352 520 471T595 594Q599 601 599 609Q599 633 555 637Q537 637 537 648Q537 649 539 661Q542 675 545 679T558 683Q560 683 570 683T604 682T668 681Q737 681 755 683H762Q769 676 769 672Q769 655 760 640Q757 637 743 637Q730 636 719 635T698 630T682 623T670 615T660 608T652 599T645 592L452 282Q272 -9 266 -16Q263 -18 259 -21L241 -22H234Q216 -22 216 -15Q213 -9 177 305Q139 623 138 626Q133 637 76 637H59Q52 642 52 648Z">
+                        </path>
+                      </g>
+                      <g data-mml-node="mo" transform="translate(861.3,413) scale(0.707)">
+                        <path data-c="2032"
+                          d="M79 43Q73 43 52 49T30 61Q30 68 85 293T146 528Q161 560 198 560Q218 560 240 545T262 501Q262 496 260 486Q259 479 173 263T84 45T79 43Z">
+                        </path>
+                      </g>
+                      <g data-mml-node="TeXAtom" transform="translate(616,-247) scale(0.707)" data-mjx-texclass="ORD">
+                        <g data-mml-node="mi">
+                          <path data-c="1D461"
+                            d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z">
+                          </path>
+                        </g>
+                        <g data-mml-node="mo" transform="translate(361,0)">
+                          <path data-c="2C"
+                            d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z">
+                          </path>
+                        </g>
+                        <g data-mml-node="mi" transform="translate(639,0)">
+                          <path data-c="1D45D"
+                            d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z">
+                          </path>
+                        </g>
+                      </g>
+                    </g>
+                    <g data-mml-node="mo" transform="translate(1751.3,0)">
+                      <path data-c="3D"
+                        d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z">
+                      </path>
+                    </g>
+                    <g data-mml-node="msubsup" transform="translate(2807.1,0)">
+                      <g data-mml-node="mi">
+                        <path data-c="1D449"
+                          d="M52 648Q52 670 65 683H76Q118 680 181 680Q299 680 320 683H330Q336 677 336 674T334 656Q329 641 325 637H304Q282 635 274 635Q245 630 242 620Q242 618 271 369T301 118L374 235Q447 352 520 471T595 594Q599 601 599 609Q599 633 555 637Q537 637 537 648Q537 649 539 661Q542 675 545 679T558 683Q560 683 570 683T604 682T668 681Q737 681 755 683H762Q769 676 769 672Q769 655 760 640Q757 637 743 637Q730 636 719 635T698 630T682 623T670 615T660 608T652 599T645 592L452 282Q272 -9 266 -16Q263 -18 259 -21L241 -22H234Q216 -22 216 -15Q213 -9 177 305Q139 623 138 626Q133 637 76 637H59Q52 642 52 648Z">
+                        </path>
+                      </g>
+                      <g data-mml-node="TeXAtom" transform="translate(861.3,490.8) scale(0.707)"
+                        data-mjx-texclass="ORD">
+                        <g data-mml-node="TeXAtom" data-mjx-texclass="ORD">
+                          <g data-mml-node="mi">
+                            <path data-c="73"
+                              d="M295 316Q295 356 268 385T190 414Q154 414 128 401Q98 382 98 349Q97 344 98 336T114 312T157 287Q175 282 201 278T245 269T277 256Q294 248 310 236T342 195T359 133Q359 71 321 31T198 -10H190Q138 -10 94 26L86 19L77 10Q71 4 65 -1L54 -11H46H42Q39 -11 33 -5V74V132Q33 153 35 157T45 162H54Q66 162 70 158T75 146T82 119T101 77Q136 26 198 26Q295 26 295 104Q295 133 277 151Q257 175 194 187T111 210Q75 227 54 256T33 318Q33 357 50 384T93 424T143 442T187 447H198Q238 447 268 432L283 424L292 431Q302 440 314 448H322H326Q329 448 335 442V310L329 304H301Q295 310 295 316Z">
+                            </path>
+                            <path data-c="70"
+                              d="M36 -148H50Q89 -148 97 -134V-126Q97 -119 97 -107T97 -77T98 -38T98 6T98 55T98 106Q98 140 98 177T98 243T98 296T97 335T97 351Q94 370 83 376T38 385H20V408Q20 431 22 431L32 432Q42 433 61 434T98 436Q115 437 135 438T165 441T176 442H179V416L180 390L188 397Q247 441 326 441Q407 441 464 377T522 216Q522 115 457 52T310 -11Q242 -11 190 33L182 40V-45V-101Q182 -128 184 -134T195 -145Q216 -148 244 -148H260V-194H252L228 -193Q205 -192 178 -192T140 -191Q37 -191 28 -194H20V-148H36ZM424 218Q424 292 390 347T305 402Q234 402 182 337V98Q222 26 294 26Q345 26 384 80T424 218Z"
+                              transform="translate(394,0)"></path>
+                          </g>
+                        </g>
+                      </g>
+                      <g data-mml-node="TeXAtom" transform="translate(616,-269) scale(0.707)" data-mjx-texclass="ORD">
+                        <g data-mml-node="mi">
+                          <path data-c="1D461"
+                            d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z">
+                          </path>
+                        </g>
+                        <g data-mml-node="mo" transform="translate(361,0)">
+                          <path data-c="2C"
+                            d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z">
+                          </path>
+                        </g>
+                        <g data-mml-node="mi" transform="translate(639,0)">
+                          <path data-c="1D45D"
+                            d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z">
+                          </path>
+                        </g>
+                      </g>
+                    </g>
+                    <g data-mml-node="mo" transform="translate(4612.3,0)">
+                      <path data-c="2B"
+                        d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z">
+                      </path>
+                    </g>
+                    <g data-mml-node="mi" transform="translate(5612.6,0)">
+                      <path data-c="1D6FD"
+                        d="M29 -194Q23 -188 23 -186Q23 -183 102 134T186 465Q208 533 243 584T309 658Q365 705 429 705H431Q493 705 533 667T573 570Q573 465 469 396L482 383Q533 332 533 252Q533 139 448 65T257 -10Q227 -10 203 -2T165 17T143 40T131 59T126 65L62 -188Q60 -194 42 -194H29ZM353 431Q392 431 427 419L432 422Q436 426 439 429T449 439T461 453T472 471T484 495T493 524T501 560Q503 569 503 593Q503 611 502 616Q487 667 426 667Q384 667 347 643T286 582T247 514T224 455Q219 439 186 308T152 168Q151 163 151 147Q151 99 173 68Q204 26 260 26Q302 26 349 51T425 137Q441 171 449 214T457 279Q457 337 422 372Q380 358 347 358H337Q258 358 258 389Q258 396 261 403Q275 431 353 431Z">
+                      </path>
+                    </g>
+                    <g data-mml-node="mstyle" transform="translate(6178.6,0)">
+                      <g data-mml-node="mspace"></g>
+                    </g>
+                    <g data-mml-node="msub" transform="translate(6345.6,0)">
+                      <g data-mml-node="TeXAtom" data-mjx-texclass="ORD">
+                        <g data-mml-node="mover">
+                          <g data-mml-node="mi">
+                            <path data-c="1D452"
+                              d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z">
+                            </path>
+                          </g>
+                          <g data-mml-node="mo" transform="translate(288.6,16) translate(-250 0)">
+                            <path data-c="5E"
+                              d="M112 560L249 694L257 686Q387 562 387 560L361 531Q359 532 303 581L250 627L195 580Q182 569 169 557T148 538L140 532Q138 530 125 546L112 560Z">
+                            </path>
+                          </g>
+                        </g>
+                      </g>
+                      <g data-mml-node="TeXAtom" transform="translate(499,-150) scale(0.707)" data-mjx-texclass="ORD">
+                        <g data-mml-node="mi">
+                          <path data-c="1D461"
+                            d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z">
+                          </path>
+                        </g>
+                        <g data-mml-node="mo" transform="translate(361,0)">
+                          <path data-c="2C"
+                            d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z">
+                          </path>
+                        </g>
+                        <g data-mml-node="mi" transform="translate(639,0)">
+                          <path data-c="1D45D"
+                            d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z">
+                          </path>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </svg></mjx-container></div>
+        </div>
+      </div>
+      <p style="margin-top:14px">FoRSE needs no training, no optical flow and no tracking. It runs a single forward pass
+        of the Video-LLM, and the masks are computed once per video. For <mjx-container class="im" class="MathJax"
+          jax="SVG"><svg style="vertical-align: -0.439ex;" xmlns="http://www.w3.org/2000/svg" width="15.297ex"
+            height="2.034ex" role="img" focusable="false" viewBox="0 -705 6761.3 899">
+            <g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)">
+              <g data-mml-node="math">
+                <g data-mml-node="mi">
+                  <path data-c="1D6FC"
+                    d="M34 156Q34 270 120 356T309 442Q379 442 421 402T478 304Q484 275 485 237V208Q534 282 560 374Q564 388 566 390T582 393Q603 393 603 385Q603 376 594 346T558 261T497 161L486 147L487 123Q489 67 495 47T514 26Q528 28 540 37T557 60Q559 67 562 68T577 70Q597 70 597 62Q597 56 591 43Q579 19 556 5T512 -10H505Q438 -10 414 62L411 69L400 61Q390 53 370 41T325 18T267 -2T203 -11Q124 -11 79 39T34 156ZM208 26Q257 26 306 47T379 90L403 112Q401 255 396 290Q382 405 304 405Q235 405 183 332Q156 292 139 224T121 120Q121 71 146 49T208 26Z">
+                  </path>
+                </g>
+                <g data-mml-node="mo" transform="translate(917.8,0)">
+                  <path data-c="3D"
+                    d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z">
+                  </path>
+                </g>
+                <g data-mml-node="msub" transform="translate(1973.6,0)">
+                  <g data-mml-node="mi">
+                    <path data-c="1D6FC"
+                      d="M34 156Q34 270 120 356T309 442Q379 442 421 402T478 304Q484 275 485 237V208Q534 282 560 374Q564 388 566 390T582 393Q603 393 603 385Q603 376 594 346T558 261T497 161L486 147L487 123Q489 67 495 47T514 26Q528 28 540 37T557 60Q559 67 562 68T577 70Q597 70 597 62Q597 56 591 43Q579 19 556 5T512 -10H505Q438 -10 414 62L411 69L400 61Q390 53 370 41T325 18T267 -2T203 -11Q124 -11 79 39T34 156ZM208 26Q257 26 306 47T379 90L403 112Q401 255 396 290Q382 405 304 405Q235 405 183 332Q156 292 139 224T121 120Q121 71 146 49T208 26Z">
+                    </path>
+                  </g>
+                  <g data-mml-node="mi" transform="translate(673,-150) scale(0.707)">
+                    <path data-c="1D460"
+                      d="M131 289Q131 321 147 354T203 415T300 442Q362 442 390 415T419 355Q419 323 402 308T364 292Q351 292 340 300T328 326Q328 342 337 354T354 372T367 378Q368 378 368 379Q368 382 361 388T336 399T297 405Q249 405 227 379T204 326Q204 301 223 291T278 274T330 259Q396 230 396 163Q396 135 385 107T352 51T289 7T195 -10Q118 -10 86 19T53 87Q53 126 74 143T118 160Q133 160 146 151T160 120Q160 94 142 76T111 58Q109 57 108 57T107 55Q108 52 115 47T146 34T201 27Q237 27 263 38T301 66T318 97T323 122Q323 150 302 164T254 181T195 196T148 231Q131 256 131 289Z">
+                    </path>
+                  </g>
+                </g>
+                <g data-mml-node="mo" transform="translate(3306,0)">
+                  <path data-c="3D"
+                    d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z">
+                  </path>
+                </g>
+                <g data-mml-node="mi" transform="translate(4361.7,0)">
+                  <path data-c="1D6FD"
+                    d="M29 -194Q23 -188 23 -186Q23 -183 102 134T186 465Q208 533 243 584T309 658Q365 705 429 705H431Q493 705 533 667T573 570Q573 465 469 396L482 383Q533 332 533 252Q533 139 448 65T257 -10Q227 -10 203 -2T165 17T143 40T131 59T126 65L62 -188Q60 -194 42 -194H29ZM353 431Q392 431 427 419L432 422Q436 426 439 429T449 439T461 453T472 471T484 495T493 524T501 560Q503 569 503 593Q503 611 502 616Q487 667 426 667Q384 667 347 643T286 582T247 514T224 455Q219 439 186 308T152 168Q151 163 151 147Q151 99 173 68Q204 26 260 26Q302 26 349 51T425 137Q441 171 449 214T457 279Q457 337 422 372Q380 358 347 358H337Q258 358 258 389Q258 396 261 403Q275 431 353 431Z">
+                  </path>
+                </g>
+                <g data-mml-node="mo" transform="translate(5205.5,0)">
+                  <path data-c="3D"
+                    d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z">
+                  </path>
+                </g>
+                <g data-mml-node="mn" transform="translate(6261.3,0)">
+                  <path data-c="30"
+                    d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z">
+                  </path>
+                </g>
+              </g>
+            </g>
+          </svg></mjx-container> it reduces exactly to the original model.</p>
+    </div>
+  </section>
+
+  <section id="results">
+    <div class="col">
+      <h2>Results</h2>
+      <h3>Hallucination benchmarks</h3>
+      <div class="scroll">
+        <table class="ptab">
+          <thead>
+            <tr>
+              <th rowspan="2">Model</th>
+              <th colspan="6" class="grp">VideoHallucer</th>
+              <th colspan="4" class="grp">EventHallusion</th>
+            </tr>
+            <tr>
+              <th>ORH</th>
+              <th>TPH</th>
+              <th>SDH</th>
+              <th>EFH</th>
+              <th>ENFH</th>
+              <th>AVG</th>
+              <th>Entire</th>
+              <th>Misleading</th>
+              <th>Mix</th>
+              <th>AVG</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="">
+              <td>LLaVA-OV-7B</td>
+              <td>50.00</td>
+              <td>45.45</td>
+              <td>43.50</td>
+              <td><u>15.00</u></td>
+              <td>48.50</td>
+              <td>40.49</td>
+              <td><u>50.00</u></td>
+              <td>85.29</td>
+              <td>41.97</td>
+              <td>59.09</td>
+            </tr>
+            <tr class="">
+              <td>+TCD</td>
+              <td>48.50</td>
+              <td>46.02</td>
+              <td><u>44.50</u></td>
+              <td><u>15.00</u></td>
+              <td><u>53.00</u></td>
+              <td><u>41.40</u></td>
+              <td>49.12</td>
+              <td>87.25</td>
+              <td>43.01</td>
+              <td>59.79</td>
+            </tr>
+            <tr class="">
+              <td>+DINO-HEAL</td>
+              <td><u>51.00</u></td>
+              <td>43.75</td>
+              <td>44.00</td>
+              <td>12.50</td>
+              <td>52.50</td>
+              <td>40.75</td>
+              <td>48.25</td>
+              <td><u>88.24</u></td>
+              <td>40.93</td>
+              <td>59.14</td>
+            </tr>
+            <tr class="">
+              <td>+SEASON</td>
+              <td><u>51.00</u></td>
+              <td><u>47.16</u></td>
+              <td>43.50</td>
+              <td><b>17.50</b></td>
+              <td>47.50</td>
+              <td>41.33</td>
+              <td><u>50.00</u></td>
+              <td>87.25</td>
+              <td><b>48.70</b></td>
+              <td><u>61.98</u></td>
+            </tr>
+            <tr class="me">
+              <td>FoRSE (ours)</td>
+              <td><b>54.50</b></td>
+              <td><b>48.86</b></td>
+              <td><b>52.00</b></td>
+              <td><u>15.00</u></td>
+              <td><b>54.00</b></td>
+              <td><b>44.87</b></td>
+              <td><b>52.63</b></td>
+              <td><b>89.22</b></td>
+              <td><u>46.63</u></td>
+              <td><b>62.83</b></td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr class="">
+              <td>Qwen2.5-VL-7B</td>
+              <td>64.50</td>
+              <td>46.02</td>
+              <td>63.00</td>
+              <td>24.50</td>
+              <td><u>57.00</u></td>
+              <td>51.00</td>
+              <td>64.04</td>
+              <td>87.25</td>
+              <td>40.93</td>
+              <td>64.07</td>
+            </tr>
+            <tr class="">
+              <td>+TCD</td>
+              <td>64.00</td>
+              <td>46.59</td>
+              <td>67.00</td>
+              <td><u>25.00</u></td>
+              <td>55.00</td>
+              <td>51.52</td>
+              <td>60.53</td>
+              <td>85.29</td>
+              <td>40.41</td>
+              <td>62.08</td>
+            </tr>
+            <tr class="">
+              <td>+DINO-HEAL</td>
+              <td><u>65.50</u></td>
+              <td><b>48.86</b></td>
+              <td><u>69.00</u></td>
+              <td>24.50</td>
+              <td><u>57.00</u></td>
+              <td><u>52.97</u></td>
+              <td>64.04</td>
+              <td>89.22</td>
+              <td>43.01</td>
+              <td>65.42</td>
+            </tr>
+            <tr class="">
+              <td>+SEASON</td>
+              <td>60.50</td>
+              <td><u>47.73</u></td>
+              <td>63.00</td>
+              <td>22.50</td>
+              <td>47.00</td>
+              <td>48.15</td>
+              <td><u>65.79</u></td>
+              <td><u>91.18</u></td>
+              <td><b>53.89</b></td>
+              <td><b>70.29</b></td>
+            </tr>
+            <tr class="me">
+              <td>FoRSE (ours)</td>
+              <td><b>66.00</b></td>
+              <td><u>47.73</u></td>
+              <td><b>71.50</b></td>
+              <td><b>27.50</b></td>
+              <td><b>58.50</b></td>
+              <td><b>54.25</b></td>
+              <td><b>66.67</b></td>
+              <td><b>92.16</b></td>
+              <td><u>47.15</u></td>
+              <td><u>68.66</u></td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr class="">
+              <td>LLaVA-Video-7B</td>
+              <td><u>66.00</u></td>
+              <td><u>59.09</u></td>
+              <td>64.00</td>
+              <td>14.50</td>
+              <td><u>52.50</u></td>
+              <td><u>51.22</u></td>
+              <td><u>58.77</u></td>
+              <td><b>92.16</b></td>
+              <td>44.56</td>
+              <td>65.16</td>
+            </tr>
+            <tr class="">
+              <td>+TCD</td>
+              <td>65.50</td>
+              <td>56.82</td>
+              <td>62.50</td>
+              <td>15.00</td>
+              <td><u>52.50</u></td>
+              <td>50.46</td>
+              <td>57.89</td>
+              <td><b>92.16</b></td>
+              <td>47.15</td>
+              <td>65.73</td>
+            </tr>
+            <tr class="">
+              <td>+DINO-HEAL</td>
+              <td>64.50</td>
+              <td>56.82</td>
+              <td><b>66.50</b></td>
+              <td>12.50</td>
+              <td>51.50</td>
+              <td>50.36</td>
+              <td>54.39</td>
+              <td><b>92.16</b></td>
+              <td>40.93</td>
+              <td>62.49</td>
+            </tr>
+            <tr class="">
+              <td>+SEASON</td>
+              <td>65.50</td>
+              <td>53.41</td>
+              <td>55.50</td>
+              <td><b>18.50</b></td>
+              <td>48.00</td>
+              <td>48.18</td>
+              <td>54.39</td>
+              <td><u>89.22</u></td>
+              <td><b>56.99</b></td>
+              <td><u>66.87</u></td>
+            </tr>
+            <tr class="me">
+              <td>FoRSE (ours)</td>
+              <td><b>68.00</b></td>
+              <td><b>68.75</b></td>
+              <td><u>64.50</u></td>
+              <td><u>17.50</u></td>
+              <td><b>55.50</b></td>
+              <td><b>54.85</b></td>
+              <td><b>62.28</b></td>
+              <td><b>92.16</b></td>
+              <td><u>47.67</u></td>
+              <td><b>67.37</b></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <figcaption><b>Table 3.</b> Evaluation on VideoHallucer and EventHallusion with different Video-LLMs as backbones.
+        Bold: best per column within each backbone; underline: second best.</figcaption>
+      <h3>Motion understanding and general video understanding</h3>
+      <div class="scroll">
+        <table class="ptab">
+          <thead>
+            <tr>
+              <th rowspan="2">Method</th>
+              <th colspan="7" class="grp">MotionBench</th>
+              <th rowspan="2">Video-MME</th>
+            </tr>
+            <tr>
+              <th>Action order</th>
+              <th>Camera motion</th>
+              <th>Location motion</th>
+              <th>Motion recog.</th>
+              <th>Motion objects</th>
+              <th>Repetition count</th>
+              <th>AVG</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="">
+              <td>Qwen2.5-VL-7B</td>
+              <td>43.74</td>
+              <td>51.42</td>
+              <td><u>59.34</u></td>
+              <td>61.23</td>
+              <td>78.84</td>
+              <td>28.25</td>
+              <td>53.80</td>
+              <td>52.33</td>
+            </tr>
+            <tr class="">
+              <td>+DINO-HEAL</td>
+              <td>45.03</td>
+              <td><u>52.73</u></td>
+              <td><b>59.52</b></td>
+              <td><u>62.72</u></td>
+              <td>78.84</td>
+              <td><u>29.00</u></td>
+              <td><u>54.64</u></td>
+              <td><b>53.15</b></td>
+            </tr>
+            <tr class="">
+              <td>+TCD</td>
+              <td>43.35</td>
+              <td><u>52.73</u></td>
+              <td>58.79</td>
+              <td>61.37</td>
+              <td><b>78.99</b></td>
+              <td>28.50</td>
+              <td>53.96</td>
+              <td>51.37</td>
+            </tr>
+            <tr class="">
+              <td>+SEASON</td>
+              <td><b>46.60</b></td>
+              <td>45.19</td>
+              <td>55.86</td>
+              <td>54.26</td>
+              <td>70.72</td>
+              <td><u>29.00</u></td>
+              <td>50.27</td>
+              <td>52.33</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr class="me">
+              <td>FoRSE (ours)</td>
+              <td><u>45.55</u></td>
+              <td><b>54.24</b></td>
+              <td><b>59.52</b></td>
+              <td><b>64.10</b></td>
+              <td><u>78.95</u></td>
+              <td><b>30.00</b></td>
+              <td><b>55.39</b></td>
+              <td><u>52.52</u></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <figcaption><b>Table 4.</b> Accuracy (%) on MotionBench and Video-MME with Qwen2.5-VL-7B. MotionBench AVG is the
+        unweighted mean of its six categories.</figcaption>
+      <h3>Scaling to 32B</h3>
+      <div style="max-width:720px">
+        <div class="scroll">
+          <table class="ptab">
+            <thead>
+              <tr>
+                <th rowspan="2">Method</th>
+                <th colspan="3" class="grp">EventHallusion</th>
+                <th colspan="3" class="grp">VideoHallucer</th>
+              </tr>
+              <tr>
+                <th>Entire</th>
+                <th>Misleading</th>
+                <th>Mix</th>
+                <th>ORH</th>
+                <th>SDH</th>
+                <th>TPH</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="">
+                <td>Qwen2.5-VL-32B</td>
+                <td>68.64</td>
+                <td>92.16</td>
+                <td>47.67</td>
+                <td>67.00</td>
+                <td>65.50</td>
+                <td>52.84</td>
+              </tr>
+              <tr class="me">
+                <td>+ FoRSE (ours)</td>
+                <td><b>71.92</b></td>
+                <td><b>93.14</b></td>
+                <td><b>54.92</b></td>
+                <td><b>69.00</b></td>
+                <td><b>72.50</b></td>
+                <td><b>55.11</b></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption><b>Table 6.</b> FoRSE on Qwen2.5-VL-32B without changing the method. It improves all six subtasks,
+          by up to +7.25 on Mix and +7.00 on SDH.</figcaption>
+      </div>
+    </div>
+  </section>
+
+  <section id="analysis" class="soft">
+    <div class="col">
+      <h2>Analysis</h2>
+      <div class="split tabs2">
+        <figure>
+          <figcaption style="margin:0 0 8px"><b>Table 5.</b> Component ablation on Qwen2.5-VL-7B.</figcaption>
+          <div class="scroll">
+            <table class="ptab">
+              <thead>
+                <tr>
+                  <th rowspan="2">Configuration</th>
+                  <th colspan="4" class="grp">MotionBench</th>
+                  <th colspan="2" class="grp">VideoHallucer</th>
+                </tr>
+                <tr>
+                  <th>AO</th>
+                  <th>CM</th>
+                  <th>MR</th>
+                  <th>Avg<sub>3</sub></th>
+                  <th>ORH</th>
+                  <th>TPH</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="">
+                  <td>Qwen2.5-VL-7B</td>
+                  <td>43.74</td>
+                  <td>51.42</td>
+                  <td>61.23</td>
+                  <td>52.13</td>
+                  <td>64.50</td>
+                  <td>46.02</td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr class="">
+                  <td>FG occupancy</td>
+                  <td>44.10</td>
+                  <td>52.20</td>
+                  <td>63.50</td>
+                  <td>53.27</td>
+                  <td>65.00</td>
+                  <td>46.02</td>
+                </tr>
+                <tr class="">
+                  <td>FG persistence</td>
+                  <td>43.90</td>
+                  <td>52.40</td>
+                  <td>63.20</td>
+                  <td>53.17</td>
+                  <td>64.50</td>
+                  <td>46.59</td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr class="">
+                  <td>Spatial</td>
+                  <td>43.95</td>
+                  <td>52.40</td>
+                  <td>63.20</td>
+                  <td>53.18</td>
+                  <td>65.00</td>
+                  <td>46.02</td>
+                </tr>
+                <tr class="">
+                  <td>Temporal</td>
+                  <td>44.30</td>
+                  <td>53.40</td>
+                  <td>63.40</td>
+                  <td>53.70</td>
+                  <td>64.00</td>
+                  <td>46.59</td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr class="me">
+                  <td>FoRSE (ours)</td>
+                  <td><b>45.55</b></td>
+                  <td><b>54.24</b></td>
+                  <td><b>64.10</b></td>
+                  <td><b>54.63</b></td>
+                  <td><b>66.00</b></td>
+                  <td><b>47.73</b></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </figure>
+        <figure>
+          <figcaption style="margin:0 0 8px"><b>Table 10.</b> Residual controls. Only the content of the residual
+            changes.</figcaption>
+          <div class="scroll">
+            <table class="ptab">
+              <thead>
+                <tr>
+                  <th rowspan="2">Residual</th>
+                  <th colspan="4" class="grp">MotionBench</th>
+                  <th colspan="2" class="grp">VideoHallucer</th>
+                </tr>
+                <tr>
+                  <th>AO</th>
+                  <th>CM</th>
+                  <th>MR</th>
+                  <th>Avg<sub>3</sub></th>
+                  <th>ORH</th>
+                  <th>TPH</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="">
+                  <td>Qwen2.5-VL-7B</td>
+                  <td>43.74</td>
+                  <td>51.42</td>
+                  <td>61.23</td>
+                  <td>52.13</td>
+                  <td>64.50</td>
+                  <td>46.02</td>
+                </tr>
+                <tr class="">
+                  <td>Spatial</td>
+                  <td>43.95</td>
+                  <td>52.40</td>
+                  <td>63.20</td>
+                  <td>53.18</td>
+                  <td>65.00</td>
+                  <td>46.02</td>
+                </tr>
+                <tr class="">
+                  <td>Random</td>
+                  <td>43.55</td>
+                  <td>51.69</td>
+                  <td>62.58</td>
+                  <td>52.61</td>
+                  <td>64.50</td>
+                  <td>45.45</td>
+                </tr>
+                <tr class="">
+                  <td>Shuffled</td>
+                  <td>44.12</td>
+                  <td>52.99</td>
+                  <td>63.40</td>
+                  <td>53.50</td>
+                  <td>65.00</td>
+                  <td>46.59</td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr class="me">
+                  <td>FoRSE (ours)</td>
+                  <td><b>45.55</b></td>
+                  <td><b>54.24</b></td>
+                  <td><b>64.10</b></td>
+                  <td><b>54.63</b></td>
+                  <td><b>66.00</b></td>
+                  <td><b>47.73</b></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </figure>
+      </div>
+      <div class="split" style="margin-top:28px;align-items:center">
+        <div>
+          <h3 style="margin-top:0">What makes it work</h3>
+          <p>Each spatial term alone mostly helps motion recognition, and the temporal residual alone helps camera
+            motion most; the full method is best on all six metrics. Replacing the residual with a random vector of the
+            same norm, or with one computed from shuffled frames, removes most of the gain.</p>
+          <h3>Inference cost</h3>
+          <p>FoRSE runs a single forward pass and computes the masks once per video. It costs 1.30&times; the base
+            latency on Qwen2.5-VL-7B and 2.88&times; on LLaVA-OV-7B, against 2.32&times; and 5.73&times; for SEASON.</p>
+        </div>
+        <figure>
+          <img class="img" src="static/latency.png" alt="Figure 4: latency per sample on EventHallusion." width="972"
+            height="468">
+          <figcaption><b>Figure 4.</b> Inference latency per sample on EventHallusion (lower is better). Labels give the
+            latency relative to the backbone.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="qualitative">
+    <div class="col">
+      <h2>Qualitative Results</h2>
+      <p style="text-align:center;color:var(--mute);margin-top:-8px">VideoHallucer questions that Qwen2.5-VL-7B answers
+        incorrectly and FoRSE answers correctly. Rows: input frames, base attention, relative feature change, attention
+        after FoRSE.</p>
+      <div class="qual">
+        <div class="track" id="track" tabindex="0" aria-label="Qualitative examples"></div>
+        <div class="carbar">
+          <button class="nav" id="prev" type="button" aria-label="Previous example">&lsaquo;</button>
+          <div class="dots" id="dots"></div>
+          <button class="nav" id="next" type="button" aria-label="Next example">&rsaquo;</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="soft" id="bibtex">
+    <div class="col">
+      <div class="bibhead">
+        <h2>BibTeX</h2><button class="btn" id="copy" type="button">Copy</button>
+      </div>
+      <pre id="bib">@inproceedings{forse2027,
+  title     = {FoRSE: Foreground-Guided Residual Spatiotemporal Enhancement
+               for Mitigating Temporal Hallucinations in Video-LLMs},
+  author    = {Anonymous},
+  booktitle = {Under review},
+  year      = {2027}
+}</pre>
+    </div>
+  </section>
+
+  <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Enlarged figure"><button class="x" id="lbx"
+      type="button" aria-label="Close">&times;</button><img id="lbimg" alt="">
+    <p id="lbcap"></p>
+  </div>
+
+  <footer>
+    <div class="col">Figures and tables are reproduced from the paper and its supplementary material.</div>
+  </footer>
+
+  <script>
+    {
+      const EX = [
+        ["FoRSE_fig6_key520.jpg", "<b>Example 1.</b> The feature change concentrates on the speaker and the passengers."],
+        ["FoRSE_fig7_key197.jpg", "<b>Example 2.</b> The change covers the railing in the first frame and the person setting the board upright in the last."],
+        ["FoRSE_fig8_key8.jpg", "<b>Example 3.</b> The same video as Figure 2. The change follows the person, the scissors and the gold bowl."],
+        ["FoRSE_fig9_key289.jpg", "<b>Example 4.</b> The black first frame receives almost no change; later frames highlight the players and the interview."],
+        ["FoRSE_fig10_key580.jpg", "<b>Example 5.</b> The change concentrates on the fire and the hands gutting the fish."]
+      ];
+      const track = document.getElementById("track"), dots = document.getElementById("dots");
+      track.innerHTML = EX.map((e, i) => `<figure class="slide"><img class="img" src="static/${e[0]}" alt="Qualitative example ${i + 1}" width="1190" height="887"><figcaption style="text-align:center">${e[1]}</figcaption></figure>`).join("");
+      dots.innerHTML = EX.map((e, i) => `<button class="dot" type="button" aria-label="Example ${i + 1}" data-i="${i}"></button>`).join("");
+      const slides = [...track.children], ds = [...dots.children];
+      let cur = 0;
+      const go = i => { cur = (i + slides.length) % slides.length; track.scrollTo({ left: slides[cur].offsetLeft - track.offsetLeft, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }) };
+      const mark = () => { const w = track.clientWidth || 1; cur = Math.round(track.scrollLeft / (w + 16)); ds.forEach((d, i) => d.setAttribute("aria-current", i === cur)) };
+      track.addEventListener("scroll", () => requestAnimationFrame(mark));
+      document.getElementById("prev").addEventListener("click", () => go(cur - 1));
+      document.getElementById("next").addEventListener("click", () => go(cur + 1));
+      dots.addEventListener("click", e => { const b = e.target.closest(".dot"); if (b) go(+b.dataset.i) });
+      track.addEventListener("keydown", e => { if (e.key === "ArrowRight") { e.preventDefault(); go(cur + 1) } if (e.key === "ArrowLeft") { e.preventDefault(); go(cur - 1) } });
+      mark();
+      const cb = document.getElementById("copy");
+      cb.addEventListener("click", async () => {
+        try { await navigator.clipboard.writeText(document.getElementById("bib").textContent); cb.textContent = "Copied"; }
+        catch (err) { cb.textContent = "Select the text to copy"; }
+        setTimeout(() => { cb.textContent = "Copy" }, 1800);
+      });
+      const lb = document.getElementById("lb"), lbi = document.getElementById("lbimg"), lbc = document.getElementById("lbcap"), lbx = document.getElementById("lbx");
+      let lastFocus = null;
+      const openLB = img => {
+        lastFocus = document.activeElement; lbi.src = img.currentSrc || img.src; lbi.alt = img.alt;
+        const cap = img.closest("figure")?.querySelector("figcaption"); lbc.innerHTML = cap ? cap.innerHTML : "";
+        lb.classList.add("open"); document.body.style.overflow = "hidden"; lbx.focus()
+      };
+      const closeLB = () => { lb.classList.remove("open"); document.body.style.overflow = ""; if (lastFocus) lastFocus.focus() };
+      document.addEventListener("click", e => { const img = e.target.closest("img.img"); if (img && !lb.contains(img)) { openLB(img) } });
+      document.querySelectorAll("img.img").forEach(img => { img.tabIndex = 0; img.setAttribute("role", "button"); img.title = "Click to enlarge" });
+      document.addEventListener("keydown", e => {
+        if (lb.classList.contains("open") && e.key === "Escape") { closeLB(); return }
+        const img = e.target.closest && e.target.closest("img.img");
+        if (img && !lb.classList.contains("open") && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openLB(img) }
+      });
+      lb.addEventListener("click", e => { if (e.target === lb || e.target === lbi) closeLB() });
+      lbx.addEventListener("click", closeLB);
+
+      const tocLinks = [...document.querySelectorAll(".toc a")];
+      const secs = tocLinks.map(a => document.querySelector(a.getAttribute("href")));
+      const setActive = () => {
+        const y = window.scrollY + 80; let k = 0; secs.forEach((sc, i) => { if (sc && sc.offsetTop <= y) k = i });
+        if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) k = secs.length - 1;
+        tocLinks.forEach((a, i) => { a.setAttribute("aria-current", i === k && window.scrollY > 200 ? "true" : "false") });
+        const act = tocLinks[k]; if (act && window.scrollY > 200) { const box = act.parentElement; const l = act.offsetLeft - box.clientWidth / 2 + act.clientWidth / 2; if (box.scrollWidth > box.clientWidth) box.scrollLeft = l }
+      };
+      let tk = false; window.addEventListener("scroll", () => { if (!tk) { tk = true; requestAnimationFrame(() => { setActive(); tk = false }) } }, { passive: true });
+      setActive();
+
+      const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!RM && "IntersectionObserver" in window) {
+        document.documentElement.classList.add("anim");
+        const tg = document.querySelectorAll("section h2, section h3, section figure:not(.slide), section .split>div, section p, section ul.find, section .math, section .props, .qual, .bibhead, pre");
+        tg.forEach(el => el.classList.add("rv"));
+        const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target) } }), { rootMargin: "0px 0px -8% 0px", threshold: .05 });
+        tg.forEach(el => io.observe(el));
+        setTimeout(() => tg.forEach(el => el.classList.add("in")), 6000);
+        document.querySelectorAll(".hl .v[data-n]").forEach(el => {
+          const n = +el.dataset.n, d = +el.dataset.d, p = el.dataset.p || "", sfx = el.dataset.s ? "\u00d7" : "", t0 = performance.now() + 300, dur = 1100;
+          const step = now => { const k = Math.min(1, Math.max(0, (now - t0) / dur)), e = 1 - Math.pow(1 - k, 3); el.textContent = p + (n * e).toFixed(d) + sfx; if (k < 1) requestAnimationFrame(step) };
+          requestAnimationFrame(step)
+        });
+      }
+
+    }
+  </script>
+</body>
+
+</html>
